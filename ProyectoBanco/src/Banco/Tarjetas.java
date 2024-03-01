@@ -15,7 +15,7 @@ public class Tarjetas extends Banco implements ITarjetas{
 
 
 	public Tarjetas(String descripcion, double comision, String fInicio, String fFinal, Cliente clienteAsociado,int clave,
-			boolean Acceso, Cuentas cuentaAsociada, String numeroTarjeta,
+			Cuentas cuentaAsociada, String numeroTarjeta,
 			int clavePIN, int claveSeguridad, double saldoDiario, String fechaCaducidad) {
 
 		super(descripcion,comision, fInicio, fFinal,clave);
@@ -103,23 +103,28 @@ public class Tarjetas extends Banco implements ITarjetas{
 	}
 
 
+	
 	@Override
 	public String toString() {
-		return "Tarjetas [ cuentaAsociada=" + cuentaAsociada
-				+ ", numeroTarjeta=" + numeroTarjeta + ", clavePIN=" + clavePIN + ", claveSeguridad=" + claveSeguridad
-				+ ", saldoDiario=" + saldoDiario + ", fechaCaducidad=" + fechaCaducidad + "]";
+		return "Tarjetas [cuentaAsociada=" + cuentaAsociada + ", numeroTarjeta=" + numeroTarjeta + ", clavePIN="
+				+ clavePIN + ", claveSeguridad=" + claveSeguridad + ", saldoDiario=" + saldoDiario + ", fechaCaducidad="
+				+ fechaCaducidad + ", clienteAsociado=" + clienteAsociado + ", descripcion=" + descripcion
+				+ ", comision=" + comision + ", fInicio=" + fInicio + ", fFinal=" + fFinal + ", clave=" + clave
+				+ "]";
 	}
+
+
 
 	@Override
 	public boolean Acceso(int codigo) {
-		if (super.Acceso(codigo)) {
+		if (codigo == this.clavePIN) {
 			acceso = true;
 		} else {
 			acceso = false;
 		}
 		return acceso;
 	}
-	public void sacaDinero(int cantidad) {
+	public void sacaDinero(double cantidad) {
 		if(acceso) {
 			if (this instanceof Debito) {
 				//MODIFICA CLIENTE
@@ -137,7 +142,7 @@ public class Tarjetas extends Banco implements ITarjetas{
 				monedero.sacaMonedero(cantidad);
 			}	
 		}else {
-			System.out.println("ping incorrecto");
+			System.out.println("Pin incorrecto");
 		}
 
 	}
@@ -153,7 +158,7 @@ public class Tarjetas extends Banco implements ITarjetas{
 				}
 			}
 		}else {
-			System.out.println("ping incorrecto");
+			System.out.println("Pin incorrecto");
 		}
 		return resultado;
 	}
@@ -174,7 +179,7 @@ public class Tarjetas extends Banco implements ITarjetas{
 				respuesta="el saldo en la tarjeta es de:"+monedero.getSaldoMonedero();
 			}	
 		}else {
-			System.out.println("ping incorrecto");
+			System.out.println("Pin incorrecto");
 		}
 		return respuesta;
 	}
@@ -194,17 +199,10 @@ public class Tarjetas extends Banco implements ITarjetas{
 				respuesta=monedero.toString();
 			}	
 		}else {
-			System.out.println("ping incorrecto");
+			System.out.println("Pin incorrecto");
 		}
 		return respuesta;
 	}
-	public boolean acceso(int codigo) {
-		if(codigo==clavePIN) {
-			acceso=true;
-		}else {
-			System.out.println("ping incorrecto");
-		}
-		return acceso;
-	}
+	
 
 }

@@ -1,9 +1,8 @@
 package Banco;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+
 import java.util.Scanner;
-import java.util.concurrent.ConcurrentLinkedDeque;
+
 
 public class App extends GestionAdm {
 
@@ -30,10 +29,11 @@ public class App extends GestionAdm {
 			System.out.println();
 			System.out.println("\u001B[36m----------MENU PRINCIPAL----------");
 			System.out.println("\u001B[37m");
-			System.out.println("Escriba 1 para crear Cliente y Cuenta (Prioridad)");
-			System.out.println("Escriba 2 para Administrador de Banco");
-			System.out.println("Escriba 3 para Cliente de Banco");
-			System.out.println("Escriba 0 para Salir del programa");
+			System.out.println("Pulse 1 para crear Cliente, Cuenta y Tarjetas (Prioridad)");
+			System.out.println("Pulse 2 para Administrador de Banco");
+			System.out.println("Pulse 3 para Cliente de Banco");
+			System.out.println("Pulse 4 para Clientes con Tarjeta");
+			System.out.println("Pulse 0 para Salir del programa");
 
 			rol = scanner.nextInt();
 
@@ -43,7 +43,8 @@ public class App extends GestionAdm {
 					System.out.println("Seleccione una opción:");
 					System.out.println("\u001B[33m1. Creación de cliente");
 					System.out.println("\u001B[33m2. Creación de cuenta");
-					System.out.println("\u001B[37m3. Volver al menu principal");
+					System.out.println("\u001B[33m3. Creación de tarjeta clientes");
+					System.out.println("\u001B[37m4. Volver al menu principal");
 					System.out.println("0. Salir del programa");
 
 					opcion = scanner.nextInt();
@@ -59,8 +60,13 @@ public class App extends GestionAdm {
 						System.out.println("Alta de cuenta");
 						Gestion.altaCuenta();			
 						break;
-
+						
 					case 3:
+						System.out.println("Alta tarjeta");
+						Gestion.altaTarjetaDebito();
+						break;
+
+					case 4:
 						System.out.println("Menu Principal");
 						break;
 					case 0:
@@ -69,7 +75,7 @@ public class App extends GestionAdm {
 
 					default:
 						System.out.println(
-								"Por favor, primero complete la creación del banco antes de acceder a otras opciones.");
+								"Caracter mal introducido. Elija de nuevo una opcion");
 						break;
 					}
 				} while (opcion == 0);
@@ -170,19 +176,18 @@ public class App extends GestionAdm {
 				} while (opcion == 0);
 			}
 			
+			
+		
 			if (rol == 3) {	// Menu para Clientes
 				
-				
-					
-					
-					
-					
-				do {	
+
+					Scanner miScan3=new Scanner(System.in);
+					do {	
+						
 					System.out.println("Indique su DNI por favor");
 
-					String miDNI = scanner2.nextLine();
-					
-					
+					String miDNI = miScan3.nextLine();
+						
 					System.out.println("Seleccione una opcion del menu Cliente");
 					System.out.println("1. Sacar Dinero");
 					System.out.println("2. Ingresar Dinero");
@@ -227,6 +232,35 @@ public class App extends GestionAdm {
 						throw new IllegalArgumentException("Unexpected value: " + opciones);
 					}
 				} while (opciones == 0);
+			}
+			
+			if (rol ==4) {
+				
+
+				Scanner miScan3=new Scanner(System.in);
+				do {	
+					
+				System.out.println("Indique su dni");
+
+				String dni = miScan3.nextLine();
+					
+				System.out.println("Seleccione una opcion del menu Cliente");
+				System.out.println("1. Sacar Dinero");
+			
+				
+				opciones = scanner2.nextInt();
+				switch (opciones) {
+
+				case 1:
+					
+					Gestion.sacarDineroTarjetas(dni);
+					break;
+				
+				default:
+					throw new IllegalArgumentException("Unexpected value: " + opciones);
+				}
+			} while (opciones == 0);
+				
 			}
 			if(rol == 0) {
 				System.err.println("Gracias por utilizar nuestro banco personal PALASACA");
