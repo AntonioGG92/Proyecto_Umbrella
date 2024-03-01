@@ -7,8 +7,8 @@ public class Monedero extends Tarjetas{
 	
 
 	public Monedero(String descripcion, double comision, String fInicio, String fFinal, Cliente clienteAsociado,int clave,
-			boolean Acceso, Cuentas cuentaAsociada, String numeroTarjeta, String clavePIN,
-			String claveSeguridad, double saldoDiario, String fechaCaducidad, double saldoMonedero) {
+			boolean Acceso, Cuentas cuentaAsociada, String numeroTarjeta, int clavePIN,
+			int claveSeguridad, double saldoDiario, String fechaCaducidad, double saldoMonedero) {
 		
 		super(descripcion, comision, fInicio, fFinal, clienteAsociado,clave, Acceso, cuentaAsociada, numeroTarjeta, 
 				clavePIN, claveSeguridad, saldoDiario, fechaCaducidad);

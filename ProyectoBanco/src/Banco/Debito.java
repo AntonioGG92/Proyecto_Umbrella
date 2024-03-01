@@ -7,8 +7,8 @@ public class Debito extends Tarjetas{
 	
 
 	public Debito(String descripcion, double comision, String fInicio, String fFinal, Cliente clienteAsociado,int clave,
-			boolean Acceso, Cuentas cuentaAsociada, String numeroTarjeta, String clavePIN,
-			String claveSeguridad, double saldoDiario, String fechaCaducidad, double maximoDiario) {
+			boolean Acceso, Cuentas cuentaAsociada, String numeroTarjeta, int clavePIN,
+			int claveSeguridad, double saldoDiario, String fechaCaducidad, double maximoDiario) {
 		
 		super(descripcion, comision, fInicio, fFinal, clienteAsociado,clave, Acceso, cuentaAsociada, numeroTarjeta,
 				clavePIN, claveSeguridad, saldoDiario, fechaCaducidad);
@@ -42,7 +42,7 @@ public class Debito extends Tarjetas{
 		return cuentaAsociada.getSaldo();
 	}
 	public void finDia() {
-		maximoDiario=maximoDia;
+		maximoDiario=maximoDiario;
 	}
 	
 }
