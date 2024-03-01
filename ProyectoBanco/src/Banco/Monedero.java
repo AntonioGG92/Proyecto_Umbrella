@@ -28,5 +28,25 @@ public class Monedero extends Tarjetas{
 		return "Monedero [saldoMonedero=" + saldoMonedero + "]";
 	}
 	
+	public Double sacaMonedero(int cantidad) {
+		if(acceso) {
+			if (cantidad<saldoMonedero) {
+				setSaldoDiario(getSaldoDiario()-cantidad);
+				System.out.println("dinero retirado ("+cantidad+")");
+			}else {
+				System.out.println("saldo insuficiente");
+			}
+		}
+		acceso=false;
+		return getSaldoDiario();
+	}
 	
+	public Double cargaSaldo(int cantidad) {
+		if(acceso) {
+			setSaldoDiario(getSaldoDiario()+cantidad);
+			System.out.println("dinero ingresado");
+		}
+		acceso=false;
+		return getSaldoDiario();
+	}
 }

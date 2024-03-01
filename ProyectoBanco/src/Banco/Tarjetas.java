@@ -2,24 +2,24 @@ package Banco;
 
 public class Tarjetas extends Banco implements ITarjetas{
 
-	
-	private Cuentas cuentaAsociada;
+
+	protected Cuentas cuentaAsociada;
 	private String numeroTarjeta;
 	private String clavePIN;
 	private String claveSeguridad;
 	private double saldoDiario;
 	private String fechaCaducidad;
 	private Cliente clienteAsociado;
-	
-	
-	
+
+
+
 
 	public Tarjetas(String descripcion, double comision, String fInicio, String fFinal, Cliente clienteAsociado,int clave,
 			boolean Acceso, Cuentas cuentaAsociada, String numeroTarjeta,
 			String clavePIN, String claveSeguridad, double saldoDiario, String fechaCaducidad) {
-		
+
 		super(descripcion,comision, fInicio, fFinal,clave);
-		
+
 		this.cuentaAsociada = cuentaAsociada;
 		this.numeroTarjeta = numeroTarjeta;
 		this.clavePIN = clavePIN;
@@ -109,4 +109,102 @@ public class Tarjetas extends Banco implements ITarjetas{
 				+ ", numeroTarjeta=" + numeroTarjeta + ", clavePIN=" + clavePIN + ", claveSeguridad=" + claveSeguridad
 				+ ", saldoDiario=" + saldoDiario + ", fechaCaducidad=" + fechaCaducidad + "]";
 	}
+
+	@Override
+	public boolean Acceso(int codigo) {
+		if (super.Acceso(codigo)) {
+			acceso = true;
+		} else {
+			acceso = false;
+		}
+		return acceso;
+	}
+	public void sacaDinero(int cantidad) {
+		if(acceso) {
+			if (this instanceof Debito) {
+				//MODIFICA CLIENTE
+				Debito debito = (Debito) this;
+				debito.sacaDebito(cantidad);
+			}
+			if (this instanceof Credito) {
+				//MODIFICA EMPLEADO
+				Credito credito = (Credito) this;
+				credito.sacaCredito(cantidad);
+			}
+			if (this instanceof Monedero) {
+				//MODIFICA EMPLEADO
+				Monedero monedero = (Monedero) this;
+				monedero.sacaMonedero(cantidad);
+			}	
+		}else {
+			System.out.println("ping incorrecto");
+		}
+
+	}
+	public Double cargarMonedero(int cantidad) {
+		Double resultado=(double) 0;
+		if(acceso) {
+			if(this instanceof Monedero){
+				Monedero monedero = (Monedero) this;
+				if(cuentaAsociada.getSaldo()>cantidad) {
+					resultado=monedero.cargaSaldo(cantidad);
+					cuentaAsociada.setSaldo(cuentaAsociada.getSaldo()-cantidad);
+					System.out.println("dinero ingresado ("+cantidad+")");
+				}
+			}
+		}else {
+			System.out.println("ping incorrecto");
+		}
+		return resultado;
+	}
+
+	public String saldoDisponible() {
+		String respuesta="";
+		if(acceso) {
+			if (this instanceof Debito) {
+				Debito debito = (Debito) this;
+				respuesta="su cuenta dispone de:"+debito.getCuenta().getSaldo();
+			}
+			if (this instanceof Credito) {
+				Credito credito = (Credito) this;
+				respuesta="este mes aun dispone de:"+credito.getSaldodisponible();
+			}
+			if (this instanceof Monedero) {
+				Monedero monedero = (Monedero) this;
+				respuesta="el saldo en la tarjeta es de:"+monedero.getSaldo();
+			}	
+		}else {
+			System.out.println("ping incorrecto");
+		}
+		return respuesta;
+	}
+	public String datosTarjeta() {
+		String respuesta="";
+		if(acceso) {
+			if (this instanceof Debito) {
+				Debito debito = (Debito) this;
+				respuesta=debito.toString();
+			}
+			if (this instanceof Credito) {
+				Credito credito = (Credito) this;
+				respuesta=credito.toString();
+			}
+			if (this instanceof Monedero) {
+				Monedero monedero = (Monedero) this;
+				respuesta=monedero.toString();
+			}	
+		}else {
+			System.out.println("ping incorrecto");
+		}
+		return respuesta;
+	}
+	public boolean acceso(int codigo) {
+		if(codigo==ping) {
+			acceso=true;
+		}else {
+			System.out.println("ping incorrecto");
+		}
+		return acceso;
+	}
+
 }

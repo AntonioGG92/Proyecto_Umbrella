@@ -69,7 +69,23 @@ public class Credito extends Tarjetas{
 				+ fechaFacturacion + ", recargoTarjeta=" + recargoTarjeta + "]";
 	}
 	
-	
-	
+	public Double sacaCredito(int cantidad) {
+		if(acceso) {
+			if (cantidad<saldodisponible) {
+			setSaldodisponible(getSaldodisponible()-cantidad);
+			setSaldofactura(getSaldofactura()+cantidad);
+			System.out.println("dinero retirado ("+cantidad+")");
+			}else {
+				System.out.println("saldo insuficiente");
+			}
+		}
+		acceso=false;
+		return getSaldodisponible();
+	}
+	public void findemes() {
+		setSaldodisponible(recargoCredito);
+		getCuenta().setSaldo(getCuenta().getSaldo()-getSaldofactura());
+		setSaldofactura(0.0);
+	}
 	
 }

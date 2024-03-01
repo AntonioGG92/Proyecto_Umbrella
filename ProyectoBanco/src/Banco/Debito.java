@@ -28,6 +28,21 @@ public class Debito extends Tarjetas{
 	public String toString() {
 		return "Debito [maximoDiario=" + maximoDiario + "]";
 	}
-	
+	public Double sacaDebito(int cantidad) {
+		if(acceso) {
+			if (cantidad<maximoDiario && cantidad<cuentaAsociada.getSaldo()) {
+			cuentaAsociada.setSaldo(cuentaAsociada.getSaldo()-cantidad);
+			maximoDiario=maximoDiario-cantidad;	
+			System.out.println("dinero retirado ("+cantidad+")");
+			}else {
+			System.out.println("esa cantidad supera el maximo diario permitido o la cuenta no tiene saldo suficiente");
+			}
+		}
+		acceso=false;
+		return cuentaAsociada.getSaldo();
+	}
+	public void finDia() {
+		maximoDiario=maximoDia;
+	}
 	
 }
