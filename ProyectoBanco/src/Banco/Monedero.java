@@ -7,10 +7,10 @@ public class Monedero extends Tarjetas{
 	
 
 	public Monedero(String descripcion, double comision, String fInicio, String fFinal, Cliente clienteAsociado,int clave,
-			boolean Acceso, Cuentas cuentaAsociada, String numeroTarjeta, int clavePIN,
+			Cuentas cuentaAsociada, String numeroTarjeta, int clavePIN,
 			int claveSeguridad, double saldoDiario, String fechaCaducidad, double saldoMonedero) {
 		
-		super(descripcion, comision, fInicio, fFinal, clienteAsociado,clave, Acceso, cuentaAsociada, numeroTarjeta, 
+		super(descripcion, comision, fInicio, fFinal, clienteAsociado,clave, cuentaAsociada, numeroTarjeta, 
 				clavePIN, claveSeguridad, saldoDiario, fechaCaducidad);
 		this.saldoMonedero = saldoMonedero;
 	}
@@ -28,7 +28,7 @@ public class Monedero extends Tarjetas{
 		return "Monedero [saldoMonedero=" + saldoMonedero + "]";
 	}
 	
-	public Double sacaMonedero(int cantidad) {
+	public Double sacaMonedero(double cantidad) {
 		if(acceso) {
 			if (cantidad<saldoMonedero) {
 				setSaldoDiario(getSaldoDiario()-cantidad);

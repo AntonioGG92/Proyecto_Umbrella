@@ -7,10 +7,10 @@ public class Debito extends Tarjetas{
 	
 
 	public Debito(String descripcion, double comision, String fInicio, String fFinal, Cliente clienteAsociado,int clave,
-			boolean Acceso, Cuentas cuentaAsociada, String numeroTarjeta, int clavePIN,
+			Cuentas cuentaAsociada, String numeroTarjeta, int clavePIN,
 			int claveSeguridad, double saldoDiario, String fechaCaducidad, double maximoDiario) {
 		
-		super(descripcion, comision, fInicio, fFinal, clienteAsociado,clave, Acceso, cuentaAsociada, numeroTarjeta,
+		super(descripcion, comision, fInicio, fFinal, clienteAsociado,clave, cuentaAsociada, numeroTarjeta,
 				clavePIN, claveSeguridad, saldoDiario, fechaCaducidad);
 		
 		this.maximoDiario = maximoDiario;
@@ -28,7 +28,7 @@ public class Debito extends Tarjetas{
 	public String toString() {
 		return "Debito [maximoDiario=" + maximoDiario + "]";
 	}
-	public Double sacaDebito(int cantidad) {
+	public Double sacaDebito(double cantidad) {
 		if(acceso) {
 			if (cantidad<maximoDiario && cantidad<cuentaAsociada.getSaldo()) {
 			cuentaAsociada.setSaldo(cuentaAsociada.getSaldo()-cantidad);
@@ -41,8 +41,8 @@ public class Debito extends Tarjetas{
 		acceso=false;
 		return cuentaAsociada.getSaldo();
 	}
-	public void finDia() {
-		maximoDiario=maximoDiario;
+	public void finDia(double maximoDiario) {
+		this.maximoDiario=maximoDiario;
 	}
 	
 }

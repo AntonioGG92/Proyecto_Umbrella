@@ -10,11 +10,11 @@ public class Credito extends Tarjetas{
 
 
 	public Credito(String descripcion, double comision, String fInicio, String fFinal, Cliente clienteAsociado,int clave,
-			boolean Acceso, Cuentas cuentaAsociada, String numeroTarjeta, int clavePIN,
+			Cuentas cuentaAsociada, String numeroTarjeta, int clavePIN,
 			int claveSeguridad, double saldoDiario, String fechaCaducidad, double saldoMaximo, double saldoFactura,
 			String fechaFacturacion, double recargoTarjeta) {
 		
-		super(descripcion, comision, fInicio, fFinal, clienteAsociado,clave, Acceso, cuentaAsociada, numeroTarjeta,
+		super(descripcion, comision, fInicio, fFinal, clienteAsociado,clave, cuentaAsociada, numeroTarjeta,
 				clavePIN, claveSeguridad, saldoDiario, fechaCaducidad);
 		this.saldoMaximo = saldoMaximo;
 		this.saldoFactura = saldoFactura;
@@ -69,7 +69,7 @@ public class Credito extends Tarjetas{
 				+ fechaFacturacion + ", recargoTarjeta=" + recargoTarjeta + "]";
 	}
 	
-	public Double sacaCredito(int cantidad) {
+	public Double sacaCredito(double cantidad) {
 		if(acceso) {
 			if (cantidad<saldoMaximo) {
 			setSaldoMaximo(getSaldoMaximo()-cantidad);
