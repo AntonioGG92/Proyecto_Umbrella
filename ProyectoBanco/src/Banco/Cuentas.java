@@ -103,12 +103,12 @@ public class Cuentas extends Banco implements ICuentas{
 
 	 @Override
     public boolean Acceso(int codigo) {
-        if (super.Acceso(codigo)) {
-            acceso = true;
+        if (codigo == this.clave) {
+            this.acceso  = true;
         } else {
-            acceso = false;
+            this.acceso = false;
         }
-        return acceso;
+        return this.acceso;
     }
 
 	 
@@ -145,7 +145,7 @@ public class Cuentas extends Banco implements ICuentas{
     int claveAcceso = miScan.nextInt();
 
     String cadena = "";
-    if (this.Acceso(claveAcceso)) {
+    if (this.acceso) {
         cadena = "Saldo actual: " + getSaldo();
     } else {
         cadena = "Clave incorrecta";
@@ -160,7 +160,7 @@ public class Cuentas extends Banco implements ICuentas{
     int claveAcceso = miScan.nextInt();
 
     String infoCuenta = "";
-    if (this.Acceso(claveAcceso)) {
+    if (this.acceso) {
         infoCuenta = "Tipo de Cuenta: " + Tipo + "\n" +
                      "IBAN: " + Iban + "\n" +
                      "Saldo: " + Saldo + "\n" +
@@ -173,7 +173,8 @@ public class Cuentas extends Banco implements ICuentas{
     } else {
         infoCuenta = "Clave incorrecta";
     }
-    return infoCuenta;
+	return infoCuenta;
+   
 }
 
 	@Override
@@ -183,7 +184,7 @@ public class Cuentas extends Banco implements ICuentas{
     System.out.println("Introduzca su clave de acceso para obtener el tipo de cuenta:");
     int claveAcceso = miScan.nextInt();
 
-    if (this.Acceso(claveAcceso)) {
+    if (this.acceso) {
         return getTipo();
     } else {
         System.out.println("Clave incorrecta");
@@ -193,19 +194,20 @@ public class Cuentas extends Banco implements ICuentas{
 
 	@Override
 	public double DevolverIntereses() {
-		double intereses=0.0;
-		if(acceso) {
-		intereses= getSaldo()*super.getComision()/100;
-		System.out.println("Los interes a devolver son: "+ intereses);
-		
-		}else {
-			System.out.println("Clave incorrecta");
-		}
-		return intereses;
-		
-	}
-
-
+    double intereses = 0.0;
+    Scanner miScan= new Scanner(System.in);
+    System.out.println("Introduzca su clave de acceso para obtener el tipo de cuenta:");
+    
+    int claveAcceso = miScan.nextInt();
+    if (Acceso(claveAcceso)) {
+        intereses = getSaldo() * (getComision() / 100);
+        System.out.println("Los intereses a devolver son: " + intereses + "€");
+    } else {
+        System.out.println("Clave incorrecta");
+    }
+    
+    return intereses;
+}
 
 
 	//-----------------------------------------------//

@@ -2,8 +2,8 @@ package Banco;
 
 public interface ITarjetas {
 
-	public String getClavePIN();
-	public String getClaveSeguridad();
+	public int getClavePIN();
+	public int getClaveSeguridad();
 	public Cliente getClienteAsociado();
 	public Cuentas getCuentaAsociada();
 	public String getFechaCaducidad();

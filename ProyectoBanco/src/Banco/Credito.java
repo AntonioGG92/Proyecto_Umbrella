@@ -10,8 +10,8 @@ public class Credito extends Tarjetas{
 
 
 	public Credito(String descripcion, double comision, String fInicio, String fFinal, Cliente clienteAsociado,int clave,
-			boolean Acceso, Cuentas cuentaAsociada, String numeroTarjeta, String clavePIN,
-			String claveSeguridad, double saldoDiario, String fechaCaducidad, double saldoMaximo, double saldoFactura,
+			boolean Acceso, Cuentas cuentaAsociada, String numeroTarjeta, int clavePIN,
+			int claveSeguridad, double saldoDiario, String fechaCaducidad, double saldoMaximo, double saldoFactura,
 			String fechaFacturacion, double recargoTarjeta) {
 		
 		super(descripcion, comision, fInicio, fFinal, clienteAsociado,clave, Acceso, cuentaAsociada, numeroTarjeta,
@@ -71,21 +71,21 @@ public class Credito extends Tarjetas{
 	
 	public Double sacaCredito(int cantidad) {
 		if(acceso) {
-			if (cantidad<saldodisponible) {
-			setSaldodisponible(getSaldodisponible()-cantidad);
-			setSaldofactura(getSaldofactura()+cantidad);
+			if (cantidad<saldoMaximo) {
+			setSaldoMaximo(getSaldoMaximo()-cantidad);
+			setSaldoFactura(getSaldoFactura()+cantidad);
 			System.out.println("dinero retirado ("+cantidad+")");
 			}else {
 				System.out.println("saldo insuficiente");
 			}
 		}
 		acceso=false;
-		return getSaldodisponible();
+		return getSaldoMaximo();
 	}
 	public void findemes() {
-		setSaldodisponible(recargoCredito);
-		getCuenta().setSaldo(getCuenta().getSaldo()-getSaldofactura());
-		setSaldofactura(0.0);
+		setSaldoMaximo(recargoTarjeta);
+		getCuentaAsociada().setSaldo(getCuentaAsociada().getSaldo()-getSaldoFactura());
+		setSaldoFactura(0.0);
 	}
 	
 }

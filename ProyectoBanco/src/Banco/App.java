@@ -172,15 +172,14 @@ public class App extends GestionAdm {
 			
 			if (rol == 3) {	// Menu para Clientes
 				
-				
-					
-					
-					
+									
 					
 				do {	
+					
+					Scanner scanner3= new Scanner(System.in);
 					System.out.println("Indique su DNI por favor");
 
-					String miDNI = scanner2.nextLine();
+					String miDNI = scanner3.nextLine();
 					
 					
 					System.out.println("Seleccione una opcion del menu Cliente");
@@ -203,7 +202,6 @@ public class App extends GestionAdm {
 						break;
 					case 2:
 						Gestion.IngresarDinero(miDNI);
-						;
 						break;
 					case 3:
 						Gestion.VisualizarCuenta(miDNI);

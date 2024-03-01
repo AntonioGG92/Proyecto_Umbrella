@@ -1,6 +1,5 @@
 package Banco;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -26,7 +25,6 @@ public class GestionAdm {
 		this.misEmpleados = misEmpleados;
 	}
 
-
 	public ArrayList<Cuentas> getMiCuenta() {
 		return miCuenta;
 	}
@@ -40,115 +38,101 @@ public class GestionAdm {
 	Scanner miScan2 = new Scanner(System.in);
 	Scanner miScan = new Scanner(System.in);
 
-	/*public void altaBanco() {
-
-		String descripcion = "PALASACA";
-
-		System.out.println("Ingrese su clave bancaria de 4 digitos");
-		int clave = miScan2.nextInt();
-
-		Banco nuevoBanco = new Banco(des
-		try {
-			miBancos.add(nuevoBanco);
-		} catch (IndexOutOfBoundsException e) {
-			System.out.println("Solo se puede agregar un único banco");
-		}
-		System.out.println("\u001B[33m¡Banco creado con exito!");
-		System.out.println("\u001B[37m");
-		System.out.println("Información del nuevo Banco");
-		System.out.println(nuevoBanco.toString());
-		System.out.println();
-	}
-*/
 	Scanner scanner = new Scanner(System.in);
 	Scanner scanner2 = new Scanner(System.in);
 
 	public void altaCuenta() {
 
-		if (misCliente.isEmpty()) {
-			System.out.println("Por favor cree un cliente primero antes de crear una cuenta");
-			AltaCliente();
-		}
+		boolean clienteCreado = false;
 
-		System.out.println("Ingrese el DNI del cliente para abrir la cuenta:");
-		String dniCliente = scanner.nextLine();
-		Cliente clienteEncontrado = null;
-		for (Cliente c : getMisCliente()) {
-			if (c.getDni().equals(dniCliente)) {
-				clienteEncontrado = c;
-				break;
+		while (!clienteCreado) {
+
+			if (misCliente.isEmpty()) {
+				System.out.println("Por favor cree un cliente primero antes de crear una cuenta");
+				AltaCliente();
+			}
+
+			System.out.println("Ingrese el DNI del cliente para abrir la cuenta:");
+			String dniCliente = scanner.nextLine();
+			Cliente clienteEncontrado = null;
+			for (Cliente c : getMisCliente()) {
+				if (c.getDni().equals(dniCliente)) {
+					clienteEncontrado = c;
+					break;
+				}
+			}
+
+			if (clienteEncontrado == null) {
+				System.out.println("El cliente con dni " + dniCliente + " no ha sido encontrado");
+				System.out.println("Primero debe dar de alta un cliente para abrir la cuenta y asociarla a la misma");
+				AltaCliente();
+			} else {
+
+				System.out.println();
+				System.out.println("\u001B[36mCreación de nueva cuenta:");
+
+				System.out.println("\u001B[37mIngrese la descripción de la cuenta:");
+				String descripcion = scanner.nextLine();
+				System.out.println();
+
+				System.out.println("Ingrese la comision de la cuenta");
+				double comision = scanner2.nextDouble();
+				System.out.println();
+
+				System.out.println("Ingrese la fecha de inicio (formato dd/mm/yyyy):");
+				String fInicio = scanner.nextLine();
+				System.out.println();
+
+				System.out.println("Ingrese la fecha final (formato dd/mm/yyyy):");
+				String fFinal = scanner.nextLine();
+				System.out.println();
+
+				System.out.println("Ingrese el cliente asociado");
+				Cliente cliente = clienteEncontrado;
+				System.out.println(clienteEncontrado.toString());
+				System.out.println();
+
+				System.out.println("Ingrese su clave de acceso bancaria");
+				int clave = scanner2.nextInt();
+
+				System.out.println("Ingrese el tipo de cuenta (JOVEN, CORRIENTE, NOMINA, SUPERIOR, AHORRO):");
+				String tipoCuentaInput = scanner.nextLine();
+				TiposCuenta tipo = null;
+				try {
+					tipo = TiposCuenta.valueOf(tipoCuentaInput.toUpperCase());
+				} catch (IllegalArgumentException e) {
+					System.out.println("Tipo de cuenta inválido. Ingrese un tipo de cuenta válido");
+				}
+				System.out.println();
+
+				System.out.println("Ingrese el iban de la cuenta");
+				int iban = (int) (Math.random() * 1000000000 + 1);
+				System.out.println("Iban aleatorio generado automaticamente");
+				System.out.println(iban);
+				System.out.println();
+
+				System.out.println("Ingrese el saldo inicial");
+				double saldo = scanner2.nextDouble();
+				System.out.println();
+
+				System.out.println("Ingrese la cuota de mantenimiento");
+				double cmantenimiento = scanner2.nextDouble();
+				System.out.println();
+
+				// Crear una nueva instancia de Cuentas utilizando el constructor predefinido
+				Cuentas nuevaCuenta = new Cuentas(descripcion, comision, fInicio, fFinal, cliente, clave, tipo, iban,
+						saldo, cmantenimiento);
+
+				// Agregar la nueva cuenta a la lista miCuenta
+				miCuenta.add(nuevaCuenta);
+
+				System.out.println(nuevaCuenta.toString());
+				System.out.println("\u001B[33m¡Nueva cuenta creada con éxito!");
+				System.out.println("\u001B[37m");
+				clienteCreado = true;
 			}
 		}
-
-		if (clienteEncontrado == null) {
-			System.out.println("El cliente con dni " + dniCliente + " no ha sido encontrado");
-			System.out.println("Primero debe dar de alta un cliente para abrir la cuenta y asociarla a la misma");
-			AltaCliente();
-		} else {
-
-			System.out.println();
-			System.out.println("\u001B[36mCreación de nueva cuenta:");
-
-			System.out.println("\u001B[37mIngrese la descripción de la cuenta:");
-			String descripcion = scanner.nextLine();
-			System.out.println();
-
-			System.out.println("Ingrese la comision de la cuenta");
-			double comision = scanner2.nextDouble();
-			System.out.println();
-
-			System.out.println("Ingrese la fecha de inicio (formato dd/mm/yyyy):");
-			String fInicio = scanner.nextLine();
-			System.out.println();
-
-			System.out.println("Ingrese la fecha final (formato dd/mm/yyyy):");
-			String fFinal = scanner.nextLine();
-			System.out.println();
-
-			System.out.println("Ingrese el cliente asociado");
-			Cliente cliente = clienteEncontrado;
-			System.out.println(clienteEncontrado.toString());
-			System.out.println();
-			
-			System.out.println("Ingrese su clave de acceso bancaria");
-			int clave = scanner2.nextInt();
-
-			System.out.println("Ingrese el tipo de cuenta (JOVEN, CORRIENTE, NOMINA, SUPERIOR, AHORRO):");
-			String tipoCuentaInput = scanner.nextLine();
-			TiposCuenta tipo = null;
-			try {
-				tipo = TiposCuenta.valueOf(tipoCuentaInput.toUpperCase());
-			} catch (IllegalArgumentException e) {
-				System.out.println("Tipo de cuenta inválido. Ingrese un tipo de cuenta válido");
-			}
-			System.out.println();
-
-			System.out.println("Ingrese el iban de la cuenta");
-			int iban = (int) (Math.random() * 1000000000 + 1);
-			System.out.println("Iban aleatorio generado automaticamente");
-			System.out.println(iban);
-			System.out.println();
-
-			System.out.println("Ingrese el saldo inicial");
-			double saldo = scanner2.nextDouble();
-			System.out.println();
-
-			System.out.println("Ingrese la cuota de mantenimiento");
-			double cmantenimiento = scanner2.nextDouble();
-			System.out.println();
-
-			// Crear una nueva instancia de Cuentas utilizando el constructor predefinido
-			Cuentas nuevaCuenta = new Cuentas(descripcion, comision, fInicio, fFinal, cliente, clave, tipo, iban, saldo,
-					cmantenimiento);
-
-			// Agregar la nueva cuenta a la lista miCuenta
-			miCuenta.add(nuevaCuenta);
-
-			System.out.println(nuevaCuenta.toString());
-			System.out.println("\u001B[33m¡Nueva cuenta creada con éxito!");
-			System.out.println("\u001B[37m");
-		}
-		}
+	}
 
 	// Metodos para el Administrador del banco
 
@@ -632,99 +616,82 @@ public class GestionAdm {
 
 	// Metodos para el Cliente
 
-	/*public void AccesoCliente(String dni) {
-		
-			for (Cliente cliente : misCliente) {
-				if (cliente.getDni().equals(dni)) {
-					if (banco.Acceso()) {
-						System.out.println("Acceso concedido para el cliente con DNI: " + dni);
-						return;
-					} else {
-						System.out.println("Clave incorrecta para el cliente con DNI: " + dni);
-						System.exit(0);
-					}
-				}
-			}
-		}
-		System.out.println("El cliente con DNI " + dni + " no se encuentra en la base de datos.");
-		System.out.println("Compruebe la creacion del banco y la creacion de cuentas");
-		System.exit(0);
-	}*/
+
 
 	public void SacarDinero(String dniCliente) {
-    Cuentas cuenta = null;
-    Cliente cliente = null;
+		Cuentas cuenta = null;
+		Cliente cliente = null;
 
-    for (Cuentas cu : miCuenta) {
-        if (cu.getCliente().getDni().equals(dniCliente)) {
-            cuenta = cu;
-            cliente = cu.getCliente();
-            break;
-        }
-    }
+		for (Cuentas cu : miCuenta) {
+			if (cu.getCliente().getDni().equals(dniCliente)) {
+				cuenta = cu;
+				cliente = cu.getCliente();
+				break;
+			}
+		}
 
-    // Verificar que el cliente y la cuenta coincidan
-    if (cliente != null && cuenta != null && cliente.equals(cuenta.getCliente())) {
-        System.out.println("Saldo disponible antes de la operación: " + cuenta.getSaldo());
+		// Verificar que el cliente y la cuenta coincidan
+		if (cliente != null && cuenta != null && cliente.equals(cuenta.getCliente())) {
+			System.out.println("Saldo disponible antes de la operación: " + cuenta.getSaldo());
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Ingrese la clave de acceso para realizar la operación: ");
-        int claveAcceso = scanner.nextInt();
+			Scanner scanner = new Scanner(System.in);
+			System.out.println("Ingrese la clave de acceso para realizar la operación: ");
+			int claveAcceso = scanner.nextInt();
 
-        if (cuenta.Acceso(claveAcceso)) {
-            System.out.println("Ingrese la cantidad que desea retirar: ");
-            double cantidad = scanner.nextDouble();
+			if (cuenta.Acceso(claveAcceso)) {
+				System.out.println("Ingrese la cantidad que desea retirar: ");
+				double cantidad = scanner.nextDouble();
 
-            if (cuenta.getSaldo() >= cantidad) {
-                cuenta.SacarDinero(cantidad);
+				if (cuenta.getSaldo() >= cantidad) {
+					cuenta.SacarDinero(cantidad);
 
-                System.out.println("Saldo disponible después de la operación: " + cuenta.getSaldo());
-            } else {
-                System.out.println("Saldo insuficiente para realizar la operación de retiro.");
-            }
-        } else {
-            System.out.println("Clave incorrecta. Operación de retiro cancelada.");
-        }
-    } else {
-        System.out.println("Cliente o cuenta no encontrados o no coinciden.");
-    }
-}
+					System.out.println("Saldo disponible después de la operación: " + cuenta.getSaldo());
+				} else {
+					System.out.println("Saldo insuficiente para realizar la operación de retiro.");
+				}
+			} else {
+				System.out.println("Clave incorrecta. Operación de retiro cancelada.");
+			}
+		} else {
+			System.out.println("Cliente o cuenta no encontrados o no coinciden.");
+		}
+	}
 
 	public void IngresarDinero(String dniCliente) {
-    Cuentas cuenta = null;
-    Cliente cliente = null;
+		Cuentas cuenta = null;
+		Cliente cliente = null;
 
-    for (Cuentas cu : miCuenta) {
-        if (cu.getCliente().getDni().equals(dniCliente)) {
-            cuenta = cu;
-            cliente = cu.getCliente();
-            break;
-        }
-    }
+		for (Cuentas cu : miCuenta) {
+			if (cu.getCliente().getDni().equals(dniCliente)) {
+				cuenta = cu;
+				cliente = cu.getCliente();
+				break;
+			}
+		}
 
-    // Verificar que el cliente y la cuenta coincidan
-    if (cliente != null && cuenta != null && cliente.equals(cuenta.getCliente())) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Introduzca su clave de acceso para ingresar dinero:");
-        int claveAcceso = scanner.nextInt();
+		// Verificar que el cliente y la cuenta coincidan
+		if (cliente != null && cuenta != null && cliente.equals(cuenta.getCliente())) {
+			Scanner scanner = new Scanner(System.in);
+			System.out.println("Introduzca su clave de acceso para ingresar dinero:");
+			int claveAcceso = scanner.nextInt();
 
-        if (cuenta.Acceso(claveAcceso)) {
-            System.out.println("Saldo disponible antes de la operación: " + cuenta.getSaldo());
+			if (cuenta.Acceso(claveAcceso)) {
+				System.out.println("Saldo disponible antes de la operación: " + cuenta.getSaldo());
 
-            System.out.println("¿Qué cantidad de dinero quiere ingresar?");
-            double cantidad = scanner.nextDouble();
-            
-            cuenta.IngresarDinero(cantidad);
+				System.out.println("¿Qué cantidad de dinero quiere ingresar?");
+				double cantidad = scanner.nextDouble();
 
-            System.out.println("Saldo disponible después de la operación: " + cuenta.getSaldo());
-        } else {
-            System.out.println("Clave incorrecta. Operación de ingreso cancelada.");
-        }
-    } else {
-        System.out.println("Cliente o cuenta no encontrados o no coinciden.");
-    }
-}
-	
+				cuenta.IngresarDinero(cantidad);
+
+				System.out.println("Saldo disponible después de la operación: " + cuenta.getSaldo());
+			} else {
+				System.out.println("Clave incorrecta. Operación de ingreso cancelada.");
+			}
+		} else {
+			System.out.println("Cliente o cuenta no encontrados o no coinciden.");
+		}
+	}
+
 	public void VisualizarCuenta(String dniCliente) {
 		Cuentas cuenta = null;
 		Cliente cliente = null;
@@ -761,7 +728,8 @@ public class GestionAdm {
 			}
 		}
 		if (cliente != null) {
-			cuenta.DatosCuenta();
+			String infocuenta = cuenta.DatosCuenta();
+			System.out.println(infocuenta);
 		} else {
 			System.out.println("Cliente no encontrado o no tiene acceso para visualizar los datos de la cuenta.");
 		}
@@ -778,19 +746,13 @@ public class GestionAdm {
 				break;
 			}
 		}
-
-		// Verificar si se encontró el cliente por el DNI
 		if (cliente != null) {
-
-			// Visualizar tipo cuenta del cliente
-			return cuenta.getTipo();
-
+			String tipo = cuenta.getTipo().name();
+			System.out.println("Su tipo de cuenta es: " + tipo);
 		} else {
-			// Mostrar mensaje de cliente no encontrado o sin acceso
-			System.out.println("Cliente no encontrado o no tiene acceso para realizar la operación de retiro.");
-			return null;
+			System.out.println("Cliente no encontrado o no tiene acceso para visualizar los datos de la cuenta.");
 		}
-
+		return null;
 	}
 
 	public void DevolverInteres(String dniCliente) {
@@ -806,10 +768,11 @@ public class GestionAdm {
 		}
 
 		if (cliente != null) {
-			cuenta.DevolverIntereses();
+			double intereses = cuenta.DevolverIntereses();
+			System.out.println("Los interes a devolver son: " + intereses);
 		} else {
 			System.out.println("Cliente no encontrado o no tiene acceso para visualizar los datos de la cuenta.");
-		
+
 		}
 	}
 }

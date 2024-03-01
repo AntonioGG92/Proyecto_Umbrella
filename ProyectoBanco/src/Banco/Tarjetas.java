@@ -5,8 +5,8 @@ public class Tarjetas extends Banco implements ITarjetas{
 
 	protected Cuentas cuentaAsociada;
 	private String numeroTarjeta;
-	private String clavePIN;
-	private String claveSeguridad;
+	private int clavePIN;
+	private int claveSeguridad;
 	private double saldoDiario;
 	private String fechaCaducidad;
 	private Cliente clienteAsociado;
@@ -16,7 +16,7 @@ public class Tarjetas extends Banco implements ITarjetas{
 
 	public Tarjetas(String descripcion, double comision, String fInicio, String fFinal, Cliente clienteAsociado,int clave,
 			boolean Acceso, Cuentas cuentaAsociada, String numeroTarjeta,
-			String clavePIN, String claveSeguridad, double saldoDiario, String fechaCaducidad) {
+			int clavePIN, int claveSeguridad, double saldoDiario, String fechaCaducidad) {
 
 		super(descripcion,comision, fInicio, fFinal,clave);
 
@@ -63,22 +63,22 @@ public class Tarjetas extends Banco implements ITarjetas{
 	}
 
 
-	public String getClavePIN() {
+	public int getClavePIN() {
 		return clavePIN;
 	}
 
 
-	public void setClavePIN(String clavePIN) {
+	public void setClavePIN(int clavePIN) {
 		this.clavePIN = clavePIN;
 	}
 
 
-	public String getClaveSeguridad() {
+	public int getClaveSeguridad() {
 		return claveSeguridad;
 	}
 
 
-	public void setClaveSeguridad(String claveSeguridad) {
+	public void setClaveSeguridad(int claveSeguridad) {
 		this.claveSeguridad = claveSeguridad;
 	}
 
@@ -163,15 +163,15 @@ public class Tarjetas extends Banco implements ITarjetas{
 		if(acceso) {
 			if (this instanceof Debito) {
 				Debito debito = (Debito) this;
-				respuesta="su cuenta dispone de:"+debito.getCuenta().getSaldo();
+				respuesta="su cuenta dispone de:"+debito.getCuentaAsociada().getSaldo();
 			}
 			if (this instanceof Credito) {
 				Credito credito = (Credito) this;
-				respuesta="este mes aun dispone de:"+credito.getSaldodisponible();
+				respuesta="este mes aun dispone de:"+credito.getSaldoDiario();
 			}
 			if (this instanceof Monedero) {
 				Monedero monedero = (Monedero) this;
-				respuesta="el saldo en la tarjeta es de:"+monedero.getSaldo();
+				respuesta="el saldo en la tarjeta es de:"+monedero.getSaldoMonedero();
 			}	
 		}else {
 			System.out.println("ping incorrecto");
@@ -199,7 +199,7 @@ public class Tarjetas extends Banco implements ITarjetas{
 		return respuesta;
 	}
 	public boolean acceso(int codigo) {
-		if(codigo==ping) {
+		if(codigo==clavePIN) {
 			acceso=true;
 		}else {
 			System.out.println("ping incorrecto");
