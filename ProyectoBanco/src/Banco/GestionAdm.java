@@ -26,7 +26,6 @@ public class GestionAdm {
 		this.misEmpleados = misEmpleados;
 	}
 
-
 	public ArrayList<Cuentas> getMiCuenta() {
 		return miCuenta;
 	}
@@ -40,28 +39,6 @@ public class GestionAdm {
 	Scanner miScan2 = new Scanner(System.in);
 	Scanner miScan = new Scanner(System.in);
 
-	/*public void altaBanco() {
-
-		String descripcion = "PALASACA";
-
-		System.out.println("Ingrese su clave bancaria de 4 digitos");
-		int clave = miScan2.nextInt();
-
-		Banco nuevoBanco = new Banco(des
-		try {
-			miBancos.add(nuevoBanco);
-		} catch (IndexOutOfBoundsException e) {
-			System.out.println("Solo se puede agregar un único banco");
-		}
-		System.out.println("\u001B[33m¡Banco creado con exito!");
-		System.out.println("\u001B[37m");
-		System.out.println("Información del nuevo Banco");
-		System.out.println(nuevoBanco.toString());
-		System.out.println();
-	}
-*/
-	Scanner scanner = new Scanner(System.in);
-	Scanner scanner2 = new Scanner(System.in);
 
 	public void altaCuenta() {
 
@@ -71,7 +48,7 @@ public class GestionAdm {
 		}
 
 		System.out.println("Ingrese el DNI del cliente para abrir la cuenta:");
-		String dniCliente = scanner.nextLine();
+		String dniCliente = miScan.nextLine();
 		Cliente clienteEncontrado = null;
 		for (Cliente c : getMisCliente()) {
 			if (c.getDni().equals(dniCliente)) {
@@ -90,31 +67,31 @@ public class GestionAdm {
 			System.out.println("\u001B[36mCreación de nueva cuenta:");
 
 			System.out.println("\u001B[37mIngrese la descripción de la cuenta:");
-			String descripcion = scanner.nextLine();
+			String descripcion = miScan.nextLine();
 			System.out.println();
 
 			System.out.println("Ingrese la comision de la cuenta");
-			double comision = scanner2.nextDouble();
+			double comision = miScan2.nextDouble();
 			System.out.println();
 
 			System.out.println("Ingrese la fecha de inicio (formato dd/mm/yyyy):");
-			String fInicio = scanner.nextLine();
+			String fInicio = miScan.nextLine();
 			System.out.println();
 
 			System.out.println("Ingrese la fecha final (formato dd/mm/yyyy):");
-			String fFinal = scanner.nextLine();
+			String fFinal = miScan.nextLine();
 			System.out.println();
 
 			System.out.println("Ingrese el cliente asociado");
 			Cliente cliente = clienteEncontrado;
 			System.out.println(clienteEncontrado.toString());
 			System.out.println();
-			
+
 			System.out.println("Ingrese su clave de acceso bancaria");
-			int clave = scanner2.nextInt();
+			int clave = miScan2.nextInt();
 
 			System.out.println("Ingrese el tipo de cuenta (JOVEN, CORRIENTE, NOMINA, SUPERIOR, AHORRO):");
-			String tipoCuentaInput = scanner.nextLine();
+			String tipoCuentaInput = miScan.nextLine();
 			TiposCuenta tipo = null;
 			try {
 				tipo = TiposCuenta.valueOf(tipoCuentaInput.toUpperCase());
@@ -130,11 +107,11 @@ public class GestionAdm {
 			System.out.println();
 
 			System.out.println("Ingrese el saldo inicial");
-			double saldo = scanner2.nextDouble();
+			double saldo = miScan2.nextDouble();
 			System.out.println();
 
 			System.out.println("Ingrese la cuota de mantenimiento");
-			double cmantenimiento = scanner2.nextDouble();
+			double cmantenimiento = miScan2.nextDouble();
 			System.out.println();
 
 			// Crear una nueva instancia de Cuentas utilizando el constructor predefinido
@@ -148,13 +125,12 @@ public class GestionAdm {
 			System.out.println("\u001B[33m¡Nueva cuenta creada con éxito!");
 			System.out.println("\u001B[37m");
 		}
-		}
+	}
 
 	// Metodos para el Administrador del banco
 
 	public void AltaCliente() {
-		Scanner miScan2 = new Scanner(System.in);
-		Scanner miScan = new Scanner(System.in);
+		
 
 		System.out.println("Introduzca el DNI del cliente:");
 		String dni = miScan.nextLine();
@@ -227,8 +203,7 @@ public class GestionAdm {
 
 		int opcion;
 
-		Scanner miScan3 = new Scanner(System.in);
-		Scanner miScan = new Scanner(System.in);
+		
 
 		System.out.println("Lista de Cliente:");
 		for (int i = 0; i < getMisCliente().size(); i++) {
@@ -236,10 +211,10 @@ public class GestionAdm {
 		}
 
 		System.out.println("Ingrese el índice del cliente a modificar:");
-		int indice = miScan3.nextInt();
+		int indice = miScan2.nextInt();
 		while (indice < 0 || indice >= getMisCliente().size()) {
 			System.out.println("La posición ingresada no es válida. Ingrese un índice válido:");
-			indice = miScan3.nextInt();
+			indice = miScan2.nextInt();
 		}
 
 		Cliente clienteAModificar = getMisCliente().get(indice);
@@ -262,7 +237,7 @@ public class GestionAdm {
 			System.out.println("13.Modificar Situacion laboral");
 			System.out.println("0.SALIR");
 
-			opcion = miScan3.nextInt();
+			opcion = miScan.nextInt();
 
 			if (opcion == 1) {
 				System.out.println("Introduzca nuevo dato");
@@ -362,11 +337,10 @@ public class GestionAdm {
 
 	public void AltaEmpleados() {
 
-		Scanner miScan2 = new Scanner(System.in);
-		Scanner miScan = new Scanner(System.in);
+	
 
 		System.out.println("Introduzca el DNI del empleado:");
-		String dni = miScan2.nextLine();
+		String dni = miScan.nextLine();
 
 		System.out.println("Introduzca el nombre del empleado:");
 		String nombre = miScan.nextLine();
@@ -408,7 +382,7 @@ public class GestionAdm {
 		String puestoTrabajo = miScan.nextLine();
 
 		System.out.println("Introduzca el sueldo del empleado");
-		Double sueldo = miScan2.nextDouble();
+		double sueldo = miScan2.nextDouble();
 
 		System.out.println("Introduzca los años de experiencia del empleado");
 		int aniosExperiencia = miScan2.nextInt();
@@ -423,7 +397,7 @@ public class GestionAdm {
 
 	public void ModificarEmpleado() {
 
-		Scanner miScan4 = new Scanner(System.in);
+	
 		int opcion;
 
 		System.out.println("Lista de Empleados:");
@@ -432,10 +406,10 @@ public class GestionAdm {
 		}
 
 		System.out.println("Ingrese el índice del empleado a modificar:");
-		int indice = miScan4.nextInt();
+		int indice = miScan2.nextInt();
 		while (indice < 0 || indice >= getMisEmpleados().size()) {
 			System.out.println("La posición ingresada no es válida. Ingrese un índice válido:");
-			indice = miScan4.nextInt();
+			indice = miScan2.nextInt();
 		}
 
 		Empleados empleadoAModificar = getMisEmpleados().get(indice);
@@ -460,53 +434,53 @@ public class GestionAdm {
 			System.out.println("16.Modificar Años de Experiencia");
 			System.out.println("0.SALIR");
 
-			opcion = miScan4.nextInt();
+			opcion = miScan2.nextInt();
 
 			if (opcion == 1) {
 				System.out.println("Introduzca nuevo dato");
-				String dato = miScan4.next();
+				String dato = miScan.next();
 				empleadoAModificar.setDni(dato);
 			}
 			if (opcion == 2) {
 				System.out.println("Introduzca nuevo dato");
-				String dato = miScan4.next();
+				String dato = miScan.next();
 				empleadoAModificar.setNombre(dato);
 			}
 			if (opcion == 3) {
 				System.out.println("Introduzca nuevo dato");
-				String dato = miScan4.next();
+				String dato = miScan.next();
 				empleadoAModificar.setApellido(dato);
 			}
 
 			if (opcion == 4) {
 				System.out.println("Introduzca nuevo dato");
-				String dato = miScan4.next();
+				String dato = miScan.next();
 				empleadoAModificar.setApellido2(dato);
 			}
 
 			if (opcion == 5) {
 				System.out.println("Introduzca nuevo dato");
-				String dato = miScan4.next();
+				String dato = miScan.next();
 				empleadoAModificar.setTelefono(dato);
 			}
 			if (opcion == 6) {
 				System.out.println("Introduzca nuevo dato");
-				String dato = miScan4.next();
+				String dato = miScan.next();
 				empleadoAModificar.setCorreo(dato);
 			}
 			if (opcion == 7) {
 				System.out.println("Introduzca nuevo dato");
-				String dato = miScan4.next();
+				String dato = miScan.next();
 				empleadoAModificar.setDireccion(dato);
 			}
 			if (opcion == 8) {
 				System.out.println("Introduzca nuevo dato");
-				String dato = miScan4.next();
+				String dato = miScan.next();
 				empleadoAModificar.setLocalidad(dato);
 			}
 			if (opcion == 9) {
 				System.out.println("Introduzca nuevo dato");
-				String dato = miScan4.next();
+				String dato = miScan.next();
 				try {
 					int codigoPostal = Integer.parseInt(dato);
 					empleadoAModificar.setCPostal(codigoPostal);
@@ -518,37 +492,37 @@ public class GestionAdm {
 			}
 			if (opcion == 10) {
 				System.out.println("Introduzca nuevo dato");
-				String dato = miScan4.next();
+				String dato = miScan.next();
 				empleadoAModificar.setProvincia(dato);
 			}
 			if (opcion == 11) {
 				System.out.println("Introduzca nuevo dato");
-				String dato = miScan4.next();
+				String dato = miScan.next();
 				empleadoAModificar.setFnacimiento(dato);
 			}
 			if (opcion == 12) {
 				System.out.println("Introduzca nuevo dato");
-				String dato = miScan4.next();
+				String dato = miScan.next();
 				empleadoAModificar.setObservaciones(dato);
 			}
 			if (opcion == 13) {
 				System.out.println("Introduzca nuevo dato");
-				String dato = miScan4.next();
+				String dato = miScan.next();
 				empleadoAModificar.setFechaContratacion(dato);
 			}
 			if (opcion == 14) {
 				System.out.println("Introduzca nuevo dato");
-				String dato = miScan4.next();
+				String dato = miScan.next();
 				empleadoAModificar.setPuestoTrabajo(dato);
 			}
 			if (opcion == 15) {
 				System.out.println("Introduzca nuevo dato");
-				Double datos = miScan4.nextDouble();
+				double datos = miScan2.nextDouble();
 				empleadoAModificar.setSueldo(datos);
 			}
 			if (opcion == 16) {
 				System.out.println("Introduzca nuevo dato");
-				int datos = miScan4.nextInt();
+				int datos = miScan2.nextInt();
 				empleadoAModificar.setAniosExperiencia(datos);
 			}
 		} while (opcion != 0);
@@ -568,29 +542,39 @@ public class GestionAdm {
 		}
 	}
 
-	public void aplicarAumentoSalarial(int indiceEmpleado, double porcentajeAumento) {
+	public void aplicarAumentoSalarial() {
 		if (getMisEmpleados().isEmpty()) {
-			System.out.println("La lista esta vacia, añada antes un empleado.");
+			System.out.println("La lista está vacía, añada antes un empleado.");
 			AltaEmpleados();
 		}
 
-		Scanner miScan4 = new Scanner(System.in);
+	;
 		System.out.println("Lista de Empleados:");
 		for (int i = 0; i < getMisEmpleados().size(); i++) {
 			System.out.println(i + ". " + getMisEmpleados().get(i));
 		}
 
+		System.out.println("Modificar aumento del empleado");
+		System.out.println("Ingrese el índice del empleado a modificar:");
+		System.out.println(getMisEmpleados().toString());
+		int indiceEmpleado = miScan2.nextInt();
+
+		System.out.println("¿Qué porcentaje desea aumentar el salario?");
+		double porcentajeAumento = miScan2.nextDouble();
+
 		int indice = indiceEmpleado;
 		while (indice < 0 || indice >= getMisEmpleados().size()) {
 			System.out.println("La posición ingresada no es válida. Ingrese un índice válido:");
-			indice = miScan4.nextInt();
+			indice = miScan2.nextInt();
 		}
+
 		if (indiceEmpleado >= 0 && indiceEmpleado < misEmpleados.size()) {
 			Empleados empleado = misEmpleados.get(indiceEmpleado);
 			empleado.aumentoSalarial(porcentajeAumento);
 		} else {
 			System.out.println("Índice de empleado inválido. Por favor, seleccione un índice válido.");
 		}
+		System.out.println(getMisEmpleados().toString());
 	}
 
 	public void ascenso() {
@@ -598,29 +582,26 @@ public class GestionAdm {
 			System.out.println("La lista esta vacia, añada antes un empleado.");
 			AltaEmpleados();
 		}
-		Scanner miScanner = new Scanner(System.in);
-		Scanner miScanner2 = new Scanner(System.in);
+		
 		System.out.println("Modificar ascenso del empleado");
-
-		Scanner miScan4 = new Scanner(System.in);
 		System.out.println("Lista de Empleados:");
 		for (int i = 0; i < getMisEmpleados().size(); i++) {
 			System.out.println(i + ". " + getMisEmpleados().get(i));
 		}
 
 		System.out.println("Ingrese el índice del empleado a modificar:");
-		int indice = miScan4.nextInt();
+		int indice = miScan2.nextInt();
 		while (indice < 0 || indice >= getMisEmpleados().size()) {
 			System.out.println("La posición ingresada no es válida. Ingrese un índice válido:");
-			indice = miScan4.nextInt();
+			indice = miScan2.nextInt();
 		}
 
-		int indiceEmpleado = miScanner.nextInt();
+		int indiceEmpleado = miScan2.nextInt();
 
 		System.out.println("Ingrese el nuevo puesto el empleado");
-		String nuevoPuesto = miScanner2.nextLine();
+		String nuevoPuesto = miScan.nextLine();
 		System.out.println("Ingrese el nuevo sueldo del empleado");
-		double sueldo = miScanner.nextDouble();
+		double sueldo = miScan2.nextDouble();
 
 		double nuevoSueldo = 0.0;
 		if (indiceEmpleado >= 0 && indiceEmpleado < misEmpleados.size()) {
@@ -632,99 +613,79 @@ public class GestionAdm {
 
 	// Metodos para el Cliente
 
-	/*public void AccesoCliente(String dni) {
-		
-			for (Cliente cliente : misCliente) {
-				if (cliente.getDni().equals(dni)) {
-					if (banco.Acceso()) {
-						System.out.println("Acceso concedido para el cliente con DNI: " + dni);
-						return;
-					} else {
-						System.out.println("Clave incorrecta para el cliente con DNI: " + dni);
-						System.exit(0);
-					}
-				}
+	public void SacarDinero(String dniCliente) {
+		Cuentas cuenta = null;
+		Cliente cliente = null;
+
+		for (Cuentas cu : miCuenta) {
+			if (cu.getCliente().getDni().equals(dniCliente)) {
+				cuenta = cu;
+				cliente = cu.getCliente();
+				break;
 			}
 		}
-		System.out.println("El cliente con DNI " + dni + " no se encuentra en la base de datos.");
-		System.out.println("Compruebe la creacion del banco y la creacion de cuentas");
-		System.exit(0);
-	}*/
 
-	public void SacarDinero(String dniCliente) {
-    Cuentas cuenta = null;
-    Cliente cliente = null;
+		// Verificar que el cliente y la cuenta coincidan
+		if (cliente != null && cuenta != null && cliente.equals(cuenta.getCliente())) {
+			System.out.println("Saldo disponible antes de la operación: " + cuenta.getSaldo());
 
-    for (Cuentas cu : miCuenta) {
-        if (cu.getCliente().getDni().equals(dniCliente)) {
-            cuenta = cu;
-            cliente = cu.getCliente();
-            break;
-        }
-    }
+			System.out.println("Ingrese la clave de acceso para realizar la operación: ");
+			int claveAcceso = miScan2.nextInt();
 
-    // Verificar que el cliente y la cuenta coincidan
-    if (cliente != null && cuenta != null && cliente.equals(cuenta.getCliente())) {
-        System.out.println("Saldo disponible antes de la operación: " + cuenta.getSaldo());
+			if (cuenta.Acceso(claveAcceso)) {
+				System.out.println("Ingrese la cantidad que desea retirar: ");
+				double cantidad = miScan2.nextDouble();
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Ingrese la clave de acceso para realizar la operación: ");
-        int claveAcceso = scanner.nextInt();
+				if (cuenta.getSaldo() >= cantidad) {
+					cuenta.SacarDinero(cantidad);
 
-        if (cuenta.Acceso(claveAcceso)) {
-            System.out.println("Ingrese la cantidad que desea retirar: ");
-            double cantidad = scanner.nextDouble();
-
-            if (cuenta.getSaldo() >= cantidad) {
-                cuenta.SacarDinero(cantidad);
-
-                System.out.println("Saldo disponible después de la operación: " + cuenta.getSaldo());
-            } else {
-                System.out.println("Saldo insuficiente para realizar la operación de retiro.");
-            }
-        } else {
-            System.out.println("Clave incorrecta. Operación de retiro cancelada.");
-        }
-    } else {
-        System.out.println("Cliente o cuenta no encontrados o no coinciden.");
-    }
-}
+					System.out.println("Saldo disponible después de la operación: " + cuenta.getSaldo());
+				} else {
+					System.out.println("Saldo insuficiente para realizar la operación de retiro.");
+				}
+			} else {
+				System.out.println("Clave incorrecta. Operación de retiro cancelada.");
+			}
+		} else {
+			System.out.println("Cliente o cuenta no encontrados o no coinciden.");
+		}
+	}
 
 	public void IngresarDinero(String dniCliente) {
-    Cuentas cuenta = null;
-    Cliente cliente = null;
+		Cuentas cuenta = null;
+		Cliente cliente = null;
 
-    for (Cuentas cu : miCuenta) {
-        if (cu.getCliente().getDni().equals(dniCliente)) {
-            cuenta = cu;
-            cliente = cu.getCliente();
-            break;
-        }
-    }
+		for (Cuentas cu : miCuenta) {
+			if (cu.getCliente().getDni().equals(dniCliente)) {
+				cuenta = cu;
+				cliente = cu.getCliente();
+				break;
+			}
+		}
 
-    // Verificar que el cliente y la cuenta coincidan
-    if (cliente != null && cuenta != null && cliente.equals(cuenta.getCliente())) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Introduzca su clave de acceso para ingresar dinero:");
-        int claveAcceso = scanner.nextInt();
-
-        if (cuenta.Acceso(claveAcceso)) {
-            System.out.println("Saldo disponible antes de la operación: " + cuenta.getSaldo());
-
-            System.out.println("¿Qué cantidad de dinero quiere ingresar?");
-            double cantidad = scanner.nextDouble();
-            
-            cuenta.IngresarDinero(cantidad);
-
-            System.out.println("Saldo disponible después de la operación: " + cuenta.getSaldo());
-        } else {
-            System.out.println("Clave incorrecta. Operación de ingreso cancelada.");
-        }
-    } else {
-        System.out.println("Cliente o cuenta no encontrados o no coinciden.");
-    }
-}
+		// Verificar que el cliente y la cuenta coincidan
+		if (cliente != null && cuenta != null && cliente.equals(cuenta.getCliente())) {
 	
+			System.out.println("Introduzca su clave de acceso para ingresar dinero:");
+			int claveAcceso = miScan2.nextInt();
+
+			if (cuenta.Acceso(claveAcceso)) {
+				System.out.println("Saldo disponible antes de la operación: " + cuenta.getSaldo());
+
+				System.out.println("¿Qué cantidad de dinero quiere ingresar?");
+				double cantidad = miScan2.nextDouble();
+
+				cuenta.IngresarDinero(cantidad);
+
+				System.out.println("Saldo disponible después de la operación: " + cuenta.getSaldo());
+			} else {
+				System.out.println("Clave incorrecta. Operación de ingreso cancelada.");
+			}
+		} else {
+			System.out.println("Cliente o cuenta no encontrados o no coinciden.");
+		}
+	}
+
 	public void VisualizarCuenta(String dniCliente) {
 		Cuentas cuenta = null;
 		Cliente cliente = null;
@@ -809,7 +770,7 @@ public class GestionAdm {
 			cuenta.DevolverIntereses();
 		} else {
 			System.out.println("Cliente no encontrado o no tiene acceso para visualizar los datos de la cuenta.");
-		
+
 		}
 	}
 }

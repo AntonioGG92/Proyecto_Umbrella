@@ -136,23 +136,12 @@ public class App extends GestionAdm {
 						break;
 
 					case 7:
-
-						if (Gestion.getMisEmpleados().isEmpty()) {
-							System.out.println("La lista esta vacia, añada antes un empleado.");
-							Gestion.AltaEmpleados();
-						}
-						System.out.println("Modificar aumento del empleado");
-						System.out.println("Ingrese el índice del empleado a modificar:");
-						System.out.println(Gestion.getMisEmpleados().toString());
-						int indiceEmpleado = scanner.nextInt();
-
-						System.out.println("¿Qué porcentaje desea aumentar el salario?");
-						double porcentajeAumento = scanner2.nextDouble();
-
-						Gestion.aplicarAumentoSalarial(indiceEmpleado, porcentajeAumento);
+						System.out.println("Aumento salarial:");
+						Gestion.aplicarAumentoSalarial();
 						break;
 
 					case 8:
+						System.out.println("Ascenso :");
 						Gestion.ascenso();
 						break;
 					case 9:
@@ -172,16 +161,11 @@ public class App extends GestionAdm {
 			
 			if (rol == 3) {	// Menu para Clientes
 				
-				
-					
-					
-					
 					
 				do {	
 					System.out.println("Indique su DNI por favor");
 
 					String miDNI = scanner2.nextLine();
-					
 					
 					System.out.println("Seleccione una opcion del menu Cliente");
 					System.out.println("1. Sacar Dinero");
@@ -193,7 +177,6 @@ public class App extends GestionAdm {
 					System.out.println("7. Ir al menu Principal");
 					System.out.println("8. Salir del programa");
 
-					
 			
 					opciones = scanner2.nextInt();
 					switch (opciones) {
