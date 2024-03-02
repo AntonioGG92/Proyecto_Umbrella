@@ -21,7 +21,7 @@ public class App extends GestionAdm {
 			System.out.println();
 			System.out.println("\u001B[36m------------------------------------------Bienvenidos a la APP------------------------------------------");
 			System.out.println();
-			System.out.println("\u001B[33mNecesitamos que cree un Cliente principal y posteriormente un Banco, una Cuenta y un Empleado antes de comenzar");
+			System.out.println("\u001B[33mNecesitamos que cree un Cliente principal, una Cuenta, un Empleado y Tarjetas antes de comenzar");
 			System.out.println("\u001B[37m");
 			
 			
@@ -62,9 +62,33 @@ public class App extends GestionAdm {
 						break;
 						
 					case 3:
-						System.out.println("Alta tarjeta");
-						Gestion.altaTarjetaDebito();
-						break;
+						 System.out.println();
+						 System.out.println("Seleccione el tipo de tarjeta:");
+						    System.out.println("\u001B[33m1. Tarjeta de Débito");
+						    System.out.println("\u001B[33m2. Tarjeta de Crédito");
+						    System.out.println("\u001B[33m3. Tarjeta de Monedero");
+						    System.out.println("\u001B[37m");
+
+						    int tipoTarjeta = scanner.nextInt();
+
+						    switch (tipoTarjeta) {
+						        case 1:
+						            System.out.println("Alta tarjeta de débito");
+						            Gestion.altaTarjetaDebito();
+						            break;
+						        case 2:
+						            System.out.println("Alta tarjeta de crédito");
+						            Gestion.altaTarjetaCredito();
+						            break;
+						        case 3:
+						            System.out.println("Alta tarjeta de monedero");
+						            Gestion.altaMonedero();
+						            break;
+						        default:
+						            System.out.println("Opción no válida");
+						            break;
+						    }
+						    break;
 
 					case 4:
 						System.out.println("Menu Principal");
@@ -245,15 +269,19 @@ public class App extends GestionAdm {
 				String dni = miScan3.nextLine();
 					
 				System.out.println("Seleccione una opcion del menu Cliente");
-				System.out.println("1. Sacar Dinero");
+				System.out.println("1. Sacar Dinero con Tarjeta");
+				System.out.println("2. Cargar Monedero");
 			
 				
 				opciones = scanner2.nextInt();
 				switch (opciones) {
 
 				case 1:
-					
 					Gestion.sacarDineroTarjetas(dni);
+					break;
+					
+				case 2:
+					Gestion.cargarMonedero(dni);
 					break;
 				
 				default:

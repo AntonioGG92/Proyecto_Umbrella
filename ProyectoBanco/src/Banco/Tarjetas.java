@@ -146,21 +146,25 @@ public class Tarjetas extends Banco implements ITarjetas{
 		}
 
 	}
-	public Double cargarMonedero(int cantidad) {
-		Double resultado=(double) 0;
-		if(acceso) {
-			if(this instanceof Monedero){
-				Monedero monedero = (Monedero) this;
-				if(cuentaAsociada.getSaldo()>cantidad) {
-					resultado=monedero.cargaSaldo(cantidad);
-					cuentaAsociada.setSaldo(cuentaAsociada.getSaldo()-cantidad);
-					System.out.println("dinero ingresado ("+cantidad+")");
-				}
-			}
-		}else {
-			System.out.println("Pin incorrecto");
-		}
-		return resultado;
+	
+	public double cargarMonedero(double cantidad) {
+	    double resultado = 0;
+	    double saldoAntes= 0;
+	    if (acceso) {
+	        if (this instanceof Monedero) {
+	            Monedero monedero = (Monedero) this;
+	            	saldoAntes= monedero.getSaldoMonedero();
+	            	System.out.println("Saldo del monedero: " + saldoAntes);
+	                resultado = monedero.cargaSaldo(cantidad);
+	                System.out.println("Saldo después de la carga: " + resultado);
+	            } else {
+	                System.out.println("La cuenta no tiene saldo suficiente para cargar el monedero");
+	            }
+	        
+	    } else {
+	        System.out.println("Pin incorrecto");
+	    }
+	    return resultado;
 	}
 
 	public String saldoDisponible() {

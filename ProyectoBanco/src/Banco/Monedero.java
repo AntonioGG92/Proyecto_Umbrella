@@ -22,6 +22,7 @@ public class Monedero extends Tarjetas{
 	public void setSaldoMonedero(double saldoMonedero) {
 		this.saldoMonedero = saldoMonedero;
 	}
+	
 
 	@Override
 	public String toString() {
@@ -31,22 +32,22 @@ public class Monedero extends Tarjetas{
 	public Double sacaMonedero(double cantidad) {
 		if(acceso) {
 			if (cantidad<saldoMonedero) {
-				setSaldoDiario(getSaldoDiario()-cantidad);
-				System.out.println("dinero retirado ("+cantidad+")");
+				setSaldoMonedero(getSaldoMonedero()-cantidad);
+				System.out.println("Dinero retirado ("+cantidad+")");
 			}else {
-				System.out.println("saldo insuficiente");
+				System.out.println("Ssaldo insuficiente en el monedero");
 			}
 		}
 		acceso=false;
-		return getSaldoDiario();
+		return getSaldoMonedero();
 	}
 	
-	public Double cargaSaldo(int cantidad) {
+	public Double cargaSaldo(double cantidad) {
 		if(acceso) {
-			setSaldoDiario(getSaldoDiario()+cantidad);
-			System.out.println("dinero ingresado");
+			setSaldoMonedero(getSaldoMonedero()+cantidad);
+			System.out.println("Dinero ingresado : " + cantidad);
 		}
 		acceso=false;
-		return getSaldoDiario();
+		return getSaldoMonedero();
 	}
 }

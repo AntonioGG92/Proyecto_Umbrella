@@ -30,12 +30,14 @@ public class Debito extends Tarjetas{
 	}
 	public Double sacaDebito(double cantidad) {
 		if(acceso) {
+			System.out.println("Cantidad actual de la cuenta: " + cuentaAsociada.getSaldo());
 			if (cantidad<maximoDiario && cantidad<cuentaAsociada.getSaldo()) {
 			cuentaAsociada.setSaldo(cuentaAsociada.getSaldo()-cantidad);
 			maximoDiario=maximoDiario-cantidad;	
-			System.out.println("dinero retirado ("+cantidad+")");
+			System.out.println("Dinero retirado ("+cantidad+")");
+			System.out.println("Cantidad posterior a la operacion: " + cuentaAsociada.getSaldo());
 			}else {
-			System.out.println("esa cantidad supera el maximo diario permitido o la cuenta no tiene saldo suficiente");
+			System.out.println("Esra cantidad supera el maximo diario permitido o la cuenta no tiene saldo suficiente");
 			}
 		}
 		acceso=false;

@@ -11,14 +11,13 @@ public class GestionAdm {
 	Scanner miScan = new Scanner(System.in);
 	Scanner scanner = new Scanner(System.in);
 	Scanner scanner2 = new Scanner(System.in);
-	
+
 	private ArrayList<Cliente> misCliente = new ArrayList<Cliente>(10);
 	private ArrayList<Empleados> misEmpleados = new ArrayList<Empleados>(10);
 	private ArrayList<Cuentas> miCuenta = new ArrayList<Cuentas>(10);
 	private ArrayList<Debito> miDebito = new ArrayList<Debito>(10);
 	private ArrayList<Credito> miCredito = new ArrayList<Credito>(10);
 	private ArrayList<Monedero> miMonedero = new ArrayList<Monedero>(10);
-	
 
 	public ArrayList<Cliente> getMisCliente() {
 		return misCliente;
@@ -35,7 +34,6 @@ public class GestionAdm {
 	public void setMisEmpleados(ArrayList<Empleados> misEmpleados) {
 		this.misEmpleados = misEmpleados;
 	}
-
 
 	public ArrayList<Cuentas> getMiCuenta() {
 		return miCuenta;
@@ -116,17 +114,21 @@ public class GestionAdm {
 			Cliente cliente = clienteEncontrado;
 			System.out.println(clienteEncontrado.toString());
 			System.out.println();
-			
+
 			System.out.println("Ingrese su clave de acceso bancaria");
 			int clave = scanner2.nextInt();
 
 			System.out.println("Ingrese el tipo de cuenta (JOVEN, CORRIENTE, NOMINA, SUPERIOR, AHORRO):");
 			String tipoCuentaInput = scanner.nextLine();
 			TiposCuenta tipo = null;
-			try {
-				tipo = TiposCuenta.valueOf(tipoCuentaInput.toUpperCase());
-			} catch (IllegalArgumentException e) {
-				System.out.println("Tipo de cuenta inválido. Ingrese un tipo de cuenta válido");
+
+			while (tipo == null) {
+				try {
+					tipo = TiposCuenta.valueOf(tipoCuentaInput.toUpperCase());
+				} catch (IllegalArgumentException e) {
+					System.out.println("Tipo de cuenta inválido. Ingrese un tipo de cuenta válido:");
+					tipoCuentaInput = scanner.nextLine();
+				}
 			}
 			System.out.println();
 
@@ -155,9 +157,7 @@ public class GestionAdm {
 			System.out.println("\u001B[33m¡Nueva cuenta creada con éxito!");
 			System.out.println("\u001B[37m");
 		}
-		}
-
-	// Metodos para el Administrador del banco
+	}
 
 	public void AltaCliente() {
 
@@ -227,6 +227,8 @@ public class GestionAdm {
 		}
 
 	}
+
+	// Metodos para el Administrador del banco
 
 	public void ModificarCliente() {
 
@@ -363,7 +365,6 @@ public class GestionAdm {
 	}
 
 	public void AltaEmpleados() {
-
 
 		System.out.println("Introduzca el DNI del empleado:");
 		String dni = miScan2.nextLine();
@@ -596,7 +597,7 @@ public class GestionAdm {
 			System.out.println("La lista esta vacia, añada antes un empleado.");
 			AltaEmpleados();
 		}
-		
+
 		System.out.println("Modificar ascenso del empleado");
 
 		System.out.println("Lista de Empleados:");
@@ -617,7 +618,7 @@ public class GestionAdm {
 		String nuevoPuesto = miScan.nextLine();
 		System.out.println("Ingrese el nuevo sueldo del empleado");
 		double sueldo = miScan4.nextDouble();
-		
+
 		if (indiceEmpleado >= 0 && indiceEmpleado < misEmpleados.size()) {
 			Empleados empleado = misEmpleados.get(indiceEmpleado);
 			empleado.ascenso(nuevoPuesto, sueldo);
@@ -625,378 +626,393 @@ public class GestionAdm {
 		System.out.println(getMisEmpleados().toString());
 	}
 
-	// Metodos para el Cliente
+	// Metodos para la creacion de las tarjetas
 
 	public void altaTarjetaDebito() {
-	 if (misCliente.isEmpty()) {
-        System.out.println("Por favor cree un cliente ante de continuar");
-        AltaCliente();
-    }
-	 
-	 if (miCuenta.isEmpty()) {
-		 System.out.println("Por favor cree una cuenta antes de continuar");
-		 altaCuenta();
-	 }
+		if (misCliente.isEmpty()) {
+			System.out.println("Por favor cree un cliente ante de continuar");
+			AltaCliente();
+		}
 
-    System.out.println("Ingrese el DNI del cliente para completar una tarteja:");
-    String dniCliente = scanner.nextLine();
-    Cliente clienteEncontrado = null;
-    
-    for (Cliente c : getMisCliente()) {
-        if (c.getDni().equals(dniCliente)) {
-            clienteEncontrado = c;
-            break;
-        }
-    }
+		if (miCuenta.isEmpty()) {
+			System.out.println("Por favor cree una cuenta antes de continuar");
+			altaCuenta();
+		}
 
-    if (clienteEncontrado == null) {
-        System.out.println("El cliente con DNI " + dniCliente + " no ha sido encontrado");
-        System.out.println("Primero debe dar de alta un cliente para abrir la cuenta y asociarla a la misma");
-        AltaCliente();
-    } else {
-        System.out.println("Ingrese la descripción:");
-        String descripcion = miScan.nextLine();
-        System.out.println();
+		System.out.println("Ingrese el DNI del cliente para completar una tarteja:");
+		String dniCliente = scanner.nextLine();
+		Cliente clienteEncontrado = null;
 
-        System.out.println("Ingrese la comisión:");
-        double comision = miScan2.nextDouble();
-        System.out.println();
+		for (Cliente c : getMisCliente()) {
+			if (c.getDni().equals(dniCliente)) {
+				clienteEncontrado = c;
+				break;
+			}
+		}
 
-        System.out.println("Ingrese la fecha de inicio:");
-        String fInicio = miScan.nextLine();
-        System.out.println();
+		if (clienteEncontrado == null) {
+			System.out.println("El cliente con DNI " + dniCliente + " no ha sido encontrado");
+			System.out.println("Primero debe dar de alta un cliente para abrir la cuenta y asociarla a la misma");
+			AltaCliente();
+		} else {
+			System.out.println("Ingrese la descripción:");
+			String descripcion = miScan.nextLine();
+			System.out.println();
 
-        System.out.println("Ingrese la fecha final:");
-        String fFinal = miScan.nextLine();
-        System.out.println();
+			System.out.println("Ingrese la comisión:");
+			double comision = miScan2.nextDouble();
+			System.out.println();
 
-        System.out.println("Ingrese la cuenta asociada al cliente:");
-        Cuentas cuentaAsociada = null;
-        
-        // Obtener la cuenta asociada al cliente
-        for (Cuentas cu : getMiCuenta()) {
-            if (cu.getCliente().equals(clienteEncontrado)) {
-                cuentaAsociada = cu;
-                break;
-            }
-        }
+			System.out.println("Ingrese la fecha de inicio:");
+			String fInicio = miScan.nextLine();
+			System.out.println();
 
-        if (cuentaAsociada != null) {
-            int claveAsociada = cuentaAsociada.getClave();
+			System.out.println("Ingrese la fecha final:");
+			String fFinal = miScan.nextLine();
+			System.out.println();
 
-            System.out.println("Ingrese el numero de tarjeta");
-            int minumero= (int) (Math.random()*1000000000 +1 );
-            String numeroTarjeta = String.valueOf(minumero);
-            System.out.println("Numero de tarjeta generado automáticamente: " + numeroTarjeta);
-            System.out.println();
+			System.out.println("La cuenta y cliente asociado es :");
+			Cuentas cuentaAsociada = null;
 
-            System.out.println("Introduzca una clavePIN para su tarjeta");
-            int clavePIN = miScan2.nextInt();
-            System.out.println();
-            
-            System.out.println("Introduzca una clave de seguridad para su tarjeta");
-            int claveSeguridad = miScan.nextInt();
-            
-            System.out.println("Introduzca el limite diario de su tarjeta");
-            double saldoDiario= miScan2.nextDouble();
-            System.out.println();
-            
-            System.out.println("Introduzca la fecha de caducidad de la tarjeta");
-            String fechaCaducidad= "";
-            fFinal= fechaCaducidad;
-            System.out.println("Su fecha de caducidad sera la misma que la fecha final: "+ fechaCaducidad);
-            System.out.println();
-            
-            System.out.println("Introduca la cantidad maxima diaria");
-            double maximoDiario= miScan2.nextDouble();
-            
-        
-            Debito nuevaTarjeta = new Debito(descripcion, comision, fInicio, fFinal, clienteEncontrado, claveAsociada, cuentaAsociada, numeroTarjeta, clavePIN, claveSeguridad, saldoDiario, fechaCaducidad, maximoDiario);
-            
-            miDebito.add(nuevaTarjeta);
-            System.out.println(nuevaTarjeta.toString());
-            System.out.println("\u001B[33m¡Nueva tarjeta de debito creada con éxito!");
-            System.out.println("\u001B[37m");
-        } else {
-            System.out.println("No se encontró una cuenta asociada al cliente.");
-        }
-    }
-}
+			// Obtener la cuenta asociada al cliente
+			for (Cuentas cu : getMiCuenta()) {
+				if (cu.getCliente() == clienteEncontrado) {
+					cuentaAsociada = cu;
+					break;
+				}
+			}
+			System.out.println(cuentaAsociada.toString());
+			System.out.println(clienteEncontrado.toString());
+			System.out.println();
+
+			if (cuentaAsociada != null) {
+				int claveAsociada = cuentaAsociada.getClave();
+
+				System.out.println("Ingrese el numero de tarjeta");
+				int minumero = (int) (Math.random() * 1000000000 + 1);
+				String numeroTarjeta = String.valueOf(minumero);
+				System.out.println("Numero de tarjeta generado automáticamente: " + numeroTarjeta);
+				System.out.println();
+
+				System.out.println("Introduzca una clavePIN para su tarjeta");
+				int clavePIN = miScan2.nextInt();
+				System.out.println();
+
+				System.out.println("Introduzca una clave de seguridad para su tarjeta");
+				int claveSeguridad = miScan.nextInt();
+
+				System.out.println("Introduzca el limite diario de su tarjeta");
+				double saldoDiario = miScan2.nextDouble();
+				System.out.println();
+
+				System.out.println("Introduzca la fecha de caducidad de la tarjeta");
+				String fechaCaducidad = "";
+				fFinal = fechaCaducidad;
+				System.out.println("Su fecha de caducidad sera la misma que la fecha final: " + fechaCaducidad);
+				System.out.println();
+
+				System.out.println("Introduca la cantidad maxima diaria");
+				double maximoDiario = miScan2.nextDouble();
+
+				Debito nuevaTarjeta = new Debito(descripcion, comision, fInicio, fFinal, clienteEncontrado,
+						claveAsociada, cuentaAsociada, numeroTarjeta, clavePIN, claveSeguridad, saldoDiario,
+						fechaCaducidad, maximoDiario);
+
+				miDebito.add(nuevaTarjeta);
+				System.out.println(nuevaTarjeta.toString());
+				System.out.println("\u001B[33m¡Nueva tarjeta de debito creada con éxito!");
+				System.out.println("\u001B[37m");
+
+			}
+		}
+	}
+
 	public void altaTarjetaCredito() {
-		 if (misCliente.isEmpty()) {
-	        System.out.println("Por favor cree un cliente ante de continuar");
-	        AltaCliente();
-	    }
-		 
-		 if (miCuenta.isEmpty()) {
-			 System.out.println("Por favor cree una cuenta antes de continuar");
-			 altaCuenta();
-		 }
+		if (misCliente.isEmpty()) {
+			System.out.println("Por favor cree un cliente antes de continuar");
+			AltaCliente();
+		}
 
-	    System.out.println("Ingrese el DNI del cliente para completar una tarteja:");
-	    String dniCliente = scanner.nextLine();
-	    Cliente clienteEncontrado = null;
-	    
-	    for (Cliente c : getMisCliente()) {
-	        if (c.getDni().equals(dniCliente)) {
-	            clienteEncontrado = c;
-	            break;
-	        }
-	    }
+		if (miCuenta.isEmpty()) {
+			System.out.println("Por favor cree una cuenta antes de continuar");
+			altaCuenta();
+		}
 
-	    if (clienteEncontrado == null) {
-	        System.out.println("El cliente con DNI " + dniCliente + " no ha sido encontrado");
-	        System.out.println("Primero debe dar de alta un cliente para abrir la cuenta y asociarla a la misma");
-	        AltaCliente();
-	    } else {
-	        System.out.println("Ingrese la descripción:");
-	        String descripcion = miScan.nextLine();
-	        System.out.println();
+		System.out.println("Ingrese el DNI del cliente para completar una tarteja:");
+		String dniCliente = scanner.nextLine();
+		Cliente clienteEncontrado = null;
 
-	        System.out.println("Ingrese la comisión:");
-	        double comision = miScan2.nextDouble();
-	        System.out.println();
+		for (Cliente c : getMisCliente()) {
+			if (c.getDni().equals(dniCliente)) {
+				clienteEncontrado = c;
+				break;
+			}
+		}
 
-	        System.out.println("Ingrese la fecha de inicio:");
-	        String fInicio = miScan.nextLine();
-	        System.out.println();
+		if (clienteEncontrado == null) {
+			System.out.println("El cliente con DNI " + dniCliente + " no ha sido encontrado");
+			System.out.println("Primero debe dar de alta un cliente para abrir la cuenta y asociarla a la misma");
+			AltaCliente();
+		} else {
+			System.out.println("Ingrese la descripción:");
+			String descripcion = miScan.nextLine();
+			System.out.println();
 
-	        System.out.println("Ingrese la fecha final:");
-	        String fFinal = miScan.nextLine();
-	        System.out.println();
+			System.out.println("Ingrese la comisión:");
+			double comision = miScan.nextDouble();
+			System.out.println();
 
-	        System.out.println("Ingrese la cuenta asociada al cliente:");
-	        Cuentas cuentaAsociada = null;
-	        
-	        // Obtener la cuenta asociada al cliente
-	        for (Cuentas cu : getMiCuenta()) {
-	            if (cu.getCliente().equals(clienteEncontrado)) {
-	                cuentaAsociada = cu;
-	                break;
-	            }
-	        }
+			System.out.println("Ingrese la fecha de inicio:");
+			String fInicio = miScan.nextLine();
+			System.out.println();
 
-	        if (cuentaAsociada != null) {
-	            int claveAsociada = cuentaAsociada.getClave();
+			System.out.println("Ingrese la fecha final:");
+			String fFinal = miScan.nextLine();
+			System.out.println();
 
-	            System.out.println("Ingrese el numero de tarjeta");
-	            int minumero= (int) (Math.random()*1000000000 +1 );
-	            String numeroTarjeta = String.valueOf(minumero);
-	            System.out.println("Numero de tarjeta generado automáticamente: " + numeroTarjeta);
-	            System.out.println();
+			System.out.println("Ingrese la cuenta asociada al cliente:");
+			Cuentas cuentaAsociada = null;
 
-	            System.out.println("Introduzca una clavePIN para su tarjeta");
-	            int clavePIN = miScan2.nextInt();
-	            System.out.println();
-	            
-	            System.out.println("Introduzca una clave de seguridad para su tarjeta");
-	            int claveSeguridad = miScan.nextInt();
-	            
-	            System.out.println("Introduzca el limite diario de su tarjeta");
-	            double saldoDiario= miScan2.nextDouble();
-	            System.out.println();
-	            
-	            System.out.println("Introduza la fecha de caducidad de la tarjeta");
-	            String fechaCaducidad= "";
-	            fFinal= fechaCaducidad;
-	            System.out.println("Su fecha de caducidad sera la misma que la fecha final: "+ fechaCaducidad);
-	            System.out.println();
-	            
-	            System.out.println("Introduzca el saldo maximo diario");
-	            double saldoMaximo= miScan2.nextDouble();
-	            
-	            System.out.println("Introduzca el saldo facturacion");
-	            double saldoFactura= miScan2.nextDouble();
-	            
-	            System.out.println("Introduzca la fecha de facturacion");
-	            String fechaFacturacion= miScan.nextLine();
-	            
-	            System.out.println("Introduza el importe a recargar");
-	            double recargoTarjeta= miScan2.nextDouble();
-	            
-	        
-	            Credito nuevaTarjeta = new Credito(descripcion, comision, fInicio, fFinal, clienteEncontrado, claveAsociada, cuentaAsociada, numeroTarjeta, clavePIN, claveSeguridad, saldoDiario, fechaCaducidad, saldoMaximo, saldoFactura, fechaFacturacion, recargoTarjeta );
-	            
-	            miCredito.add(nuevaTarjeta);
-	            System.out.println(nuevaTarjeta.toString());
-	            System.out.println("\u001B[33m¡Nueva tarjeta de credito creada con éxito!");
-	            System.out.println("\u001B[37m");
-	        } else {
-	            System.out.println("No se encontró una cuenta asociada al cliente.");
-	        }
-	    }
+			// Obtener la cuenta asociada al cliente
+			for (Cuentas cu : getMiCuenta()) {
+				if (cu.getCliente().equals(clienteEncontrado)) {
+					cuentaAsociada = cu;
+					break;
+				}
+			}
+			System.out.println(cuentaAsociada.toString());
+			System.out.println(clienteEncontrado.toString());
+			System.out.println();
+
+			if (cuentaAsociada != null) {
+				int claveAsociada = cuentaAsociada.getClave();
+
+				System.out.println("Ingrese el numero de tarjeta");
+				int minumero = (int) (Math.random() * 1000000000 + 1);
+				String numeroTarjeta = String.valueOf(minumero);
+				System.out.println("Numero de tarjeta generado automáticamente: " + numeroTarjeta);
+				System.out.println();
+
+				System.out.println("Introduzca una clavePIN para su tarjeta");
+				int clavePIN = miScan2.nextInt();
+				System.out.println();
+
+				System.out.println("Introduzca una clave de seguridad para su tarjeta");
+				int claveSeguridad = miScan.nextInt();
+
+				System.out.println("Introduzca el limite diario de su tarjeta");
+				double saldoDiario = miScan2.nextDouble();
+				System.out.println();
+
+				System.out.println("Introduza la fecha de caducidad de la tarjeta");
+				String fechaCaducidad = "";
+				fFinal = fechaCaducidad;
+				System.out.println("Su fecha de caducidad sera la misma que la fecha final: " + fechaCaducidad);
+				System.out.println();
+
+				System.out.println("Introduzca el saldo maximo diario");
+				double saldoMaximo = miScan2.nextDouble();
+
+				System.out.println("Introduzca el saldo facturacion");
+				double saldoFactura = miScan2.nextDouble();
+
+				System.out.println("Introduzca la fecha de facturacion");
+				String fechaFacturacion = miScan.nextLine();
+
+				System.out.println("Introduza el importe a recargar");
+				double recargoTarjeta = miScan2.nextDouble();
+
+				Credito nuevaTarjeta = new Credito(descripcion, comision, fInicio, fFinal, clienteEncontrado,
+						claveAsociada, cuentaAsociada, numeroTarjeta, clavePIN, claveSeguridad, saldoDiario,
+						fechaCaducidad, saldoMaximo, saldoFactura, fechaFacturacion, recargoTarjeta);
+
+				miCredito.add(nuevaTarjeta);
+				System.out.println(nuevaTarjeta.toString());
+				System.out.println("\u001B[33m¡Nueva tarjeta de credito creada con éxito!");
+				System.out.println("\u001B[37m");
+			}
+		}
+		
 	}
+
 	public void altaMonedero() {
-		 if (misCliente.isEmpty()) {
-	        System.out.println("Por favor cree un cliente ante de continuar");
-	        AltaCliente();
-	    }
-		 
-		 if (miCuenta.isEmpty()) {
-			 System.out.println("Por favor cree una cuenta antes de continuar");
-			 altaCuenta();
-		 }
+		if (misCliente.isEmpty()) {
+			System.out.println("Por favor cree un cliente ante de continuar");
+			AltaCliente();
+		}
 
-	    System.out.println("Ingrese el DNI del cliente para completar una tarteja:");
-	    String dniCliente = scanner.nextLine();
-	    Cliente clienteEncontrado = null;
-	    
-	    for (Cliente c : getMisCliente()) {
-	        if (c.getDni().equals(dniCliente)) {
-	            clienteEncontrado = c;
-	            break;
-	        }
-	    }
+		if (miCuenta.isEmpty()) {
+			System.out.println("Por favor cree una cuenta antes de continuar");
+			altaCuenta();
+		}
 
-	    if (clienteEncontrado == null) {
-	        System.out.println("El cliente con DNI " + dniCliente + " no ha sido encontrado");
-	        System.out.println("Primero debe dar de alta un cliente para abrir la cuenta y asociarla a la misma");
-	        AltaCliente();
-	    } else {
-	        System.out.println("Ingrese la descripción:");
-	        String descripcion = miScan.nextLine();
-	        System.out.println();
+		System.out.println("Ingrese el DNI del cliente para completar una tarteja:");
+		String dniCliente = scanner.nextLine();
+		Cliente clienteEncontrado = null;
 
-	        System.out.println("Ingrese la comisión:");
-	        double comision = miScan2.nextDouble();
-	        System.out.println();
+		for (Cliente c : getMisCliente()) {
+			if (c.getDni().equals(dniCliente)) {
+				clienteEncontrado = c;
+				break;
+			}
+		}
 
-	        System.out.println("Ingrese la fecha de inicio:");
-	        String fInicio = miScan.nextLine();
-	        System.out.println();
+		if (clienteEncontrado == null) {
+			System.out.println("El cliente con DNI " + dniCliente + " no ha sido encontrado");
+			System.out.println("Primero debe dar de alta un cliente para abrir la cuenta y asociarla a la misma");
+			AltaCliente();
+		} else {
+			System.out.println("Ingrese la descripción:");
+			String descripcion = miScan.nextLine();
+			System.out.println();
 
-	        System.out.println("Ingrese la fecha final:");
-	        String fFinal = miScan.nextLine();
-	        System.out.println();
+			System.out.println("Ingrese la comisión:");
+			double comision = miScan.nextDouble();
+			System.out.println();
 
-	        System.out.println("Ingrese la cuenta asociada al cliente:");
-	        Cuentas cuentaAsociada = null;
-	        
-	        // Obtener la cuenta asociada al cliente
-	        for (Cuentas cu : getMiCuenta()) {
-	            if (cu.getCliente().equals(clienteEncontrado)) {
-	                cuentaAsociada = cu;
-	                break;
-	            }
-	        }
+			System.out.println("Ingrese la fecha de inicio:");
+			String fInicio = miScan.nextLine();
+			System.out.println();
 
-	        if (cuentaAsociada != null) {
-	            int claveAsociada = cuentaAsociada.getClave();
+			System.out.println("Ingrese la fecha final:");
+			String fFinal = miScan.nextLine();
+			System.out.println();
 
-	            System.out.println("Ingrese el numero de tarjeta");
-	            int minumero= (int) (Math.random()*1000000000 +1 );
-	            String numeroTarjeta = String.valueOf(minumero);
-	            System.out.println("Numero de tarjeta generado automáticamente: " + numeroTarjeta);
-	            System.out.println();
+			System.out.println("Ingrese la cuenta asociada al cliente:");
+			Cuentas cuentaAsociada = null;
 
-	            System.out.println("Introduzca una clavePIN para su tarjeta");
-	            int clavePIN = miScan2.nextInt();
-	            System.out.println();
-	            
-	            System.out.println("Introduzca una clave de seguridad para su tarjeta");
-	            int claveSeguridad = miScan.nextInt();
-	            
-	            System.out.println("Introduzca el limite diario de su tarjeta");
-	            double saldoDiario= miScan2.nextDouble();
-	            System.out.println();
-	            
-	            System.out.println("Introduza la fecha de caducidad de la tarjeta");
-	            String fechaCaducidad= "";
-	            fFinal= fechaCaducidad;
-	            System.out.println("Su fecha de caducidad sera la misma que la fecha final: "+ fechaCaducidad);
-	            System.out.println();
-	            
-	            System.out.println("Introduzca un saldo de monedero inicial");
-	            double saldoMonedero= miScan2.nextDouble();
-	            
-	        
-	            Monedero nuevaTarjeta = new Monedero(descripcion, comision, fInicio, fFinal, clienteEncontrado, claveAsociada, cuentaAsociada, numeroTarjeta, clavePIN, claveSeguridad, saldoDiario, fechaCaducidad, saldoMonedero);
-	            
-	            miMonedero.add(nuevaTarjeta);
-	            System.out.println(nuevaTarjeta.toString());
-	            System.out.println("\u001B[33m¡Nueva tarjeta creada con éxito!");
-	            System.out.println("\u001B[37m");
-	        } else {
-	            System.out.println("No se encontró una cuenta asociada al cliente.");
-	        }
-	    }
+			// Obtener la cuenta asociada al cliente
+			for (Cuentas cu : getMiCuenta()) {
+				if (cu.getCliente().equals(clienteEncontrado)) {
+					cuentaAsociada = cu;
+					break;
+				}
+			}
+			System.out.println(cuentaAsociada.toString());
+			System.out.println(clienteEncontrado.toString());
+			System.out.println();
+			
+			if (cuentaAsociada != null) {
+				int claveAsociada = cuentaAsociada.getClave();
+
+				System.out.println("Ingrese el numero de tarjeta");
+				int minumero = (int) (Math.random() * 1000000000 + 1);
+				String numeroTarjeta = String.valueOf(minumero);
+				System.out.println("Numero de tarjeta generado automáticamente: " + numeroTarjeta);
+				System.out.println();
+
+				System.out.println("Introduzca una clavePIN para su tarjeta");
+				int clavePIN = miScan2.nextInt();
+				System.out.println();
+
+				System.out.println("Introduzca una clave de seguridad para su tarjeta");
+				int claveSeguridad = miScan.nextInt();
+
+				System.out.println("Introduzca el limite diario de su tarjeta");
+				double saldoDiario = miScan2.nextDouble();
+				System.out.println();
+
+				System.out.println("Introduza la fecha de caducidad de la tarjeta");
+				String fechaCaducidad = "";
+				fFinal = fechaCaducidad;
+				System.out.println("Su fecha de caducidad sera la misma que la fecha final: " + fechaCaducidad);
+				System.out.println();
+
+				System.out.println("Introduzca un saldo de monedero inicial");
+				double saldoMonedero = miScan2.nextDouble();
+
+				Monedero nuevaTarjeta = new Monedero(descripcion, comision, fInicio, fFinal, clienteEncontrado,
+						claveAsociada, cuentaAsociada, numeroTarjeta, clavePIN, claveSeguridad, saldoDiario,
+						fechaCaducidad, saldoMonedero);
+
+				miMonedero.add(nuevaTarjeta);
+				System.out.println(nuevaTarjeta.toString());
+				System.out.println("\u001B[33m¡Nueva tarjeta monedero creada con éxito!");
+				System.out.println("\u001B[37m");
+			} 
+		}
 	}
 
-	// Inicialmente comprobamos que el DNI del cliente esta asociado a una cuenta y posteriormente pedimos la clave. 
+	// Metodos para los clientes
+
+	// Inicialmente comprobamos que el DNI del cliente esta asociado a una cuenta y
+	// posteriormente pedimos la clave.
 	public void SacarDinero(String dniCliente) {
-    Cuentas cuenta = null;
-    Cliente cliente = null;
+		Cuentas cuenta = null;
+		Cliente cliente = null;
 
-    for (Cuentas cu : miCuenta) {
-        if (cu.getCliente().getDni().equals(dniCliente)) {
-            cuenta = cu;
-            cliente = cu.getCliente();
-            break;
-        }
-    }
+		for (Cuentas cu : miCuenta) {
+			if (cu.getCliente().getDni().equals(dniCliente)) {
+				cuenta = cu;
+				cliente = cu.getCliente();
+				break;
+			}
+		}
 
-    // Verificar que el cliente y la cuenta coincidan
-    if (cliente != null && cuenta != null && cliente.equals(cuenta.getCliente())) {
-        System.out.println("Saldo disponible antes de la operación: " + cuenta.getSaldo());
+		// Verificar que el cliente y la cuenta coincidan
+		if (cliente != null && cuenta != null && cliente.equals(cuenta.getCliente())) {
+			System.out.println("Saldo disponible antes de la operación: " + cuenta.getSaldo());
 
-        System.out.println("Ingrese la clave de acceso para realizar la operación: ");
-        int claveAcceso = scanner.nextInt();
+			System.out.println("Ingrese la clave de acceso para realizar la operación: ");
+			int claveAcceso = scanner.nextInt();
 
-        if (cuenta.Acceso(claveAcceso)) {
-            System.out.println("Ingrese la cantidad que desea retirar: ");
-            double cantidad = scanner.nextDouble();
+			if (cuenta.Acceso(claveAcceso)) {
+				System.out.println("Ingrese la cantidad que desea retirar: ");
+				double cantidad = scanner.nextDouble();
 
-            if (cuenta.getSaldo() >= cantidad) {
-                cuenta.SacarDinero(cantidad);
+				if (cuenta.getSaldo() >= cantidad) {
+					cuenta.SacarDinero(cantidad);
 
-                System.out.println("Saldo disponible después de la operación: " + cuenta.getSaldo());
-            } else {
-                System.out.println("Saldo insuficiente para realizar la operación de retiro.");
-            }
-        } else {
-            System.out.println("Clave incorrecta. Operación de retiro cancelada.");
-        }
-    } else {
-        System.out.println("La cuenta y el dni no coindicen.");
-    }
-}
-	// Inicialmente comprobamos que el DNI del cliente esta asociado a una cuenta y posteriormente pedimos la clave. 
+					System.out.println("Saldo disponible después de la operación: " + cuenta.getSaldo());
+				} else {
+					System.out.println("Saldo insuficiente para realizar la operación de retiro.");
+				}
+			} else {
+				System.out.println("Clave incorrecta. Operación de retiro cancelada.");
+			}
+		} else {
+			System.out.println("La cuenta y el dni no coindicen.");
+		}
+	}
+	// Inicialmente comprobamos que el DNI del cliente esta asociado a una cuenta y
+	// posteriormente pedimos la clave.
 
 	public void IngresarDinero(String dniCliente) {
-    Cuentas cuenta = null;
-    Cliente cliente = null;
+		Cuentas cuenta = null;
+		Cliente cliente = null;
 
-    for (Cuentas cu : miCuenta) {
-        if (cu.getCliente().getDni().equals(dniCliente)) {
-            cuenta = cu;
-            cliente = cu.getCliente();
-            break;
-        }
-    }
+		for (Cuentas cu : miCuenta) {
+			if (cu.getCliente().getDni().equals(dniCliente)) {
+				cuenta = cu;
+				cliente = cu.getCliente();
+				break;
+			}
+		}
 
-    // Verificar que el cliente y la cuenta coincidan
-    if (cliente != null && cuenta != null && cliente.equals(cuenta.getCliente())) {
+		// Verificar que el cliente y la cuenta coincidan
+		if (cliente != null && cuenta != null && cliente.equals(cuenta.getCliente())) {
 
-        System.out.println("Introduzca su clave de acceso para ingresar dinero:");
-        int claveAcceso = scanner.nextInt();
+			System.out.println("Introduzca su clave de acceso para ingresar dinero:");
+			int claveAcceso = scanner.nextInt();
 
-        if (cuenta.Acceso(claveAcceso)) {
-            System.out.println("Saldo disponible antes de la operación: " + cuenta.getSaldo());
+			if (cuenta.Acceso(claveAcceso)) {
+				System.out.println("Saldo disponible antes de la operación: " + cuenta.getSaldo());
 
-            System.out.println("¿Qué cantidad de dinero quiere ingresar?");
-            double cantidad = scanner.nextDouble();
-            
-            cuenta.IngresarDinero(cantidad);
+				System.out.println("¿Qué cantidad de dinero quiere ingresar?");
+				double cantidad = scanner.nextDouble();
 
-            System.out.println("Saldo disponible después de la operación: " + cuenta.getSaldo());
-        } else {
-            System.out.println("Clave incorrecta. Operación de ingreso cancelada.");
-        }
-    } else {
-        System.out.println("La cuenta y el dni no coindicen.");
-    }
-}
-	// Inicialmente comprobamos que el DNI del cliente esta asociado a una cuenta y posteriormente pedimos la clave. 
+				cuenta.IngresarDinero(cantidad);
+
+				System.out.println("Saldo disponible después de la operación: " + cuenta.getSaldo());
+			} else {
+				System.out.println("Clave incorrecta. Operación de ingreso cancelada.");
+			}
+		} else {
+			System.out.println("La cuenta y el dni no coindicen.");
+		}
+	}
+	// Inicialmente comprobamos que el DNI del cliente esta asociado a una cuenta y
+	// posteriormente pedimos la clave.
 
 	public void VisualizarCuenta(String dniCliente) {
 		Cuentas cuenta = null;
@@ -1011,10 +1027,10 @@ public class GestionAdm {
 		}
 
 		if (cliente != null && cuenta != null && cliente.equals(cuenta.getCliente())) {
-        System.out.println("Introduzca su clave de acceso para ingresar dinero:");
-        int claveAcceso = scanner.nextInt();
+			System.out.println("Introduzca su clave de acceso para ingresar dinero:");
+			int claveAcceso = scanner.nextInt();
 
-        if (cuenta.Acceso(claveAcceso)) {
+			if (cuenta.Acceso(claveAcceso)) {
 				String infoCuenta = cuenta.VisualizarCuenta();
 				System.out.println(infoCuenta);
 			} else {
@@ -1024,36 +1040,38 @@ public class GestionAdm {
 			System.out.println("La cuenta y el dni no coindicen.");
 		}
 	}
-	// Inicialmente comprobamos que el DNI del cliente esta asociado a una cuenta y posteriormente pedimos la clave. 
+	// Inicialmente comprobamos que el DNI del cliente esta asociado a una cuenta y
+	// posteriormente pedimos la clave.
 
 	public void DatosCuenta(String dniCliente) {
 		Cuentas cuenta = null;
-    Cliente cliente = null;
+		Cliente cliente = null;
 
-    for (Cuentas cu : miCuenta) {
-        if (cu.getCliente().getDni().equals(dniCliente)) {
-            cuenta = cu;
-            cliente = cu.getCliente();
-            break;
+		for (Cuentas cu : miCuenta) {
+			if (cu.getCliente().getDni().equals(dniCliente)) {
+				cuenta = cu;
+				cliente = cu.getCliente();
+				break;
+			}
+		}
+
+		if (cliente != null && cuenta != null && cliente.equals(cuenta.getCliente())) {
+			System.out.println("Introduzca su clave de acceso para ingresar dinero:");
+			int claveAcceso = scanner.nextInt();
+
+			if (cuenta.Acceso(claveAcceso)) {
+				String micuenta = cuenta.DatosCuenta();
+				System.out.println(micuenta);
+			} else {
+				System.out.println("Clave incorrecta. No se puede mostrar la informacion.");
+			}
+		} else {
+			System.out.println("La cuenta y el dni no coindicen.");
 		}
 	}
 
-    if (cliente != null && cuenta != null && cliente.equals(cuenta.getCliente())) {
-        System.out.println("Introduzca su clave de acceso para ingresar dinero:");
-        int claveAcceso = scanner.nextInt();
-
-        if (cuenta.Acceso(claveAcceso)) {
-            String micuenta = cuenta.DatosCuenta();
-            System.out.println(micuenta);
-        } else {
-            System.out.println("Clave incorrecta. No se puede mostrar la informacion.");
-        }
-    } else {
-        System.out.println("La cuenta y el dni no coindicen.");
-    }
-}
-		
-	// Inicialmente comprobamos que el DNI del cliente esta asociado a una cuenta y posteriormente pedimos la clave. 
+	// Inicialmente comprobamos que el DNI del cliente esta asociado a una cuenta y
+	// posteriormente pedimos la clave.
 
 	public TiposCuenta TipoCuenta(String dniCliente) {
 		Cuentas cuenta = null;
@@ -1067,27 +1085,28 @@ public class GestionAdm {
 			}
 		}
 
-		 if (cliente != null && cuenta != null && cliente.equals(cuenta.getCliente())) {
+		if (cliente != null && cuenta != null && cliente.equals(cuenta.getCliente())) {
 
-        System.out.println("Introduzca su clave de acceso para ingresar dinero:");
-        int claveAcceso = scanner.nextInt();
+			System.out.println("Introduzca su clave de acceso para ingresar dinero:");
+			int claveAcceso = scanner.nextInt();
 
-        if (cuenta.Acceso(claveAcceso)) {
-		String tipo= cuenta.getTipo().name();
-			System.out.println("Su tipo de cuenta es: "+ tipo);
-	
+			if (cuenta.Acceso(claveAcceso)) {
+				String tipo = cuenta.getTipo().name();
+				System.out.println("Su tipo de cuenta es: " + tipo);
+
+			} else {
+				System.out.println("Clave incorrecta. No se puede mostrar la informacion");
+				return null;
+			}
+
 		} else {
-			System.out.println("Clave incorrecta. No se puede mostrar la informacion");
-			return null;
-		}
-			
-		}else {
 			System.out.println("La cuenta y el dni no coindicen.");
-        }
+		}
 		return null;
 	}
-	
-	// Inicialmente comprobamos que el DNI del cliente esta asociado a una cuenta y posteriormente pedimos la clave. 
+
+	// Inicialmente comprobamos que el DNI del cliente esta asociado a una cuenta y
+	// posteriormente pedimos la clave.
 
 	public void DevolverInteres(String dniCliente) {
 		Cuentas cuenta = null;
@@ -1100,99 +1119,130 @@ public class GestionAdm {
 				break;
 			}
 		}
-		 if (cliente != null && cuenta != null && cliente.equals(cuenta.getCliente())) {
-	
-		        System.out.println("Introduzca su clave de acceso para ingresar dinero:");
-		        int claveAcceso = scanner.nextInt();
+		if (cliente != null && cuenta != null && cliente.equals(cuenta.getCliente())) {
 
-		        if (cuenta.Acceso(claveAcceso)) {
-		        	cuenta.DevolverIntereses();
-		        } else {
-		            System.out.println("Clave incorrecta. No se puede devolver el interes.");
-		        }
-		    } else {
-		        System.out.println("La cuenta y el dni no coinciden.");
-		    }
-}
-	// Metodos para las tarjetas
-	
-	
-		
-		public void sacarDineroTarjetas(String dniCliente) {
-			
-			Cuentas cuenta = null;
-		    Cliente cliente = null;
-		    Tarjetas tarjeta = null;
+			System.out.println("Introduzca su clave de acceso para ingresar dinero:");
+			int claveAcceso = scanner.nextInt();
 
-		    for (Debito de : miDebito) {
-		        for (Cuentas cu : miCuenta) {
-		            if (cu.getCliente().getDni().equals(dniCliente)) {
-		                cuenta = cu;
-		                cliente = cu.getCliente();
-		                break;
-		            }
-		        }
-
-		        if (cliente != null && cuenta != null && cliente.equals(cuenta.getCliente())) {
-		            System.out.println("¿Qué tarjeta deseas utilizar?");
-		            System.out.println("1. Debito");
-		            System.out.println("2. Credito");
-		            System.out.println("3. Monedero");
-
-		            int tipoTarjeta = miScan.nextInt();
-
-		            switch (tipoTarjeta) {
-		                case 1: 
-		                    for (Debito deb : miDebito) {
-		                        if (deb.getCuentaAsociada() == cuenta) {
-		                            tarjeta = deb;
-		                            break;
-		                        }
-		                    }
-		                    break;
-
-		                case 2:
-		                    for (Credito cre : miCredito) {
-		                        if (cre.getCuentaAsociada() == cuenta) {
-		                            tarjeta = cre;
-		                            break;
-		                        }
-		                    }
-		                    break;
-
-		                case 3:
-		                    for (Monedero mon : miMonedero) {
-		                        if (mon.getCuentaAsociada() == cuenta) {
-		                            tarjeta = mon;
-		                            break;
-		                        }
-		                    }
-		                    break;
-
-		                default:
-		                    System.out.println("Opción no válida");
-		                    return;
-		            }
-
-		            if (tarjeta != null) {
-		                System.out.print("Ingrese el código PIN: ");
-		                int codigoPIN = scanner.nextInt();
-		                if (tarjeta.Acceso(codigoPIN)) {
-		                    System.out.print("Ingrese la cantidad a retirar: ");
-		                    double cantidad = scanner.nextDouble();
-		                    tarjeta.sacaDinero(cantidad);
-		                } else {
-		                    System.out.println("Código PIN incorrecto. No se puede acceder a la tarjeta.");
-		                }
-		            } else {
-		                System.out.println("La tarjeta asociada a la cuenta no se encontró.");
-		            }
-		        } else {
-		            System.out.println("El cliente asociado a la cuenta no se encontró.");
-		        }
-		    }
+			if (cuenta.Acceso(claveAcceso)) {
+				cuenta.DevolverIntereses();
+			} else {
+				System.out.println("Clave incorrecta. No se puede devolver el interes.");
+			}
+		} else {
+			System.out.println("La cuenta y el dni no coinciden.");
 		}
-}
-	
-			
+	}
 
+	// Metodos para las tarjetas
+
+	public void sacarDineroTarjetas(String dniCliente) {
+		Cuentas cuenta = null;
+		Cliente cliente = null;
+		Tarjetas tarjeta = null;
+
+		for (Cuentas cu : miCuenta) {
+			if (cu.getCliente().getDni().equals(dniCliente)) {
+				cuenta = cu;
+				cliente = cu.getCliente();
+				break;
+			}
+		}
+
+		if (cliente != null && cuenta != null && cliente.equals(cuenta.getCliente())) {
+			System.out.println("¿Qué tarjeta deseas utilizar?");
+			System.out.println("1. Debito");
+			System.out.println("2. Credito");
+			System.out.println("3. Monedero");
+
+			int tipoTarjeta = miScan.nextInt();
+
+			switch (tipoTarjeta) {
+			case 1:
+				for (Debito deb : miDebito) {
+					if (deb.getCuentaAsociada() == cuenta) {
+						tarjeta = deb;
+						break;
+					}
+				}
+				break;
+
+			case 2:
+				for (Credito cre : miCredito) {
+					if (cre.getCuentaAsociada() == cuenta) {
+						tarjeta = cre;
+						break;
+					}
+				}
+				break;
+
+			case 3:
+				for (Monedero mon : miMonedero) {
+					if (mon.getCuentaAsociada() == cuenta) {
+						tarjeta = mon;
+						break;
+					}
+				}
+				break;
+
+			default:
+				System.out.println("Opción no válida");
+				return;
+			}
+
+			if (tarjeta != null) {
+				System.out.print("Ingrese el código PIN: ");
+				int codigoPIN = miScan.nextInt();
+				if (tarjeta.Acceso(codigoPIN)) {
+					System.out.print("Ingrese la cantidad a retirar: ");
+					double cantidad = miScan.nextDouble();
+					tarjeta.sacaDinero(cantidad);
+				} else {
+					System.out.println("Código PIN incorrecto. No se puede acceder a la tarjeta.");
+				}
+			} else {
+				System.out.println("La tarjeta asociada a la cuenta no se encontró.");
+			}
+		} else {
+			System.out.println("El cliente asociado a la cuenta no se encontró.");
+		}
+	}
+
+	public void cargarMonedero(String dniCliente) {
+		Cuentas cuenta = null;
+		Cliente cliente = null;
+		Tarjetas tarjeta = null;
+
+		for (Cuentas cu : miCuenta) {
+			if (cu.getCliente().getDni().equals(dniCliente)) {
+				cuenta = cu;
+				cliente = cu.getCliente();
+				break;
+			}
+		}
+
+		if (cliente != null && cuenta != null && cliente.equals(cuenta.getCliente())) {
+			for (Monedero mon : miMonedero) {
+				if (mon.getCuentaAsociada() == cuenta) {
+					tarjeta = mon;
+					break;
+				}
+			}
+			if (tarjeta != null) {
+				System.out.print("Ingrese el código PIN: ");
+				int codigoPIN = miScan.nextInt();
+				if (tarjeta.Acceso(codigoPIN)) {
+					System.out.print("Ingrese la cantidad a cargar: ");
+					double cantidad = miScan.nextDouble();
+					tarjeta.cargarMonedero(cantidad);
+				} else {
+					System.out.println("Código PIN incorrecto. No se puede acceder a la tarjeta.");
+				}
+			} else {
+				System.out.println("La tarjeta asociada a la cuenta no se encontró.");
+			}
+		} else {
+			System.out.println("El cliente asociado a la cuenta no se encontró.");
+		}
+	}
+}
